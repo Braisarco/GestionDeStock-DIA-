@@ -1,5 +1,5 @@
 namespace src;
 
-class ProbasDebbugs {
+class main {
     Proveedor = new Proveedor();
 }

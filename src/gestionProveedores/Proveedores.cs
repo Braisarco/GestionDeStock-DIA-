@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Xml.Linq;
 
-namespace Proveedores.Core;
+namespace src.gestionProveedores;
 
 public class Proveedores
 {

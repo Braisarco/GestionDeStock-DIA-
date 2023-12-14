@@ -6,8 +6,8 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Xml.Linq;
 
-namespace gestor_stock_clientes.Properties
-{
+namespace gestor_stock_clientes.Properties;
+
     public class Clientes
     {
         private List<Cliente> listaClientes;
@@ -133,4 +133,3 @@ namespace gestor_stock_clientes.Properties
             return toret.ToString();
         }
     }
-}

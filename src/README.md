@@ -2,4 +2,4 @@
 
 - Codigo base de cada unha das partes do proyecto 
 
-- Un archivo a modo de program para probar que todo funcione, funcions coas clases que teñamos mezcladas e tal.
+- Un archivo main que chamará a todos os métodos de crear, generando unha instancia de casa cousa. Básicamente o que arrancará o proyecto, polo menos de primeiras.

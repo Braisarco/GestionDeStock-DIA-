@@ -3,8 +3,8 @@ using System.Runtime.InteropServices.JavaScript;
 using System.Text;
 using System.Xml.Linq;
 
-namespace gestor_stock_clientes.Properties
-{
+namespace src.gestionClientes;
+
     public class Cliente
     {
         private string cif;
@@ -101,4 +101,4 @@ namespace gestor_stock_clientes.Properties
             return $"CIF: {this.cif}\nNombre: {this.nombre}\nDireccion: {this.direccionFacturacion}\nCodigos: {CodigoPiezasVendidasString}";
         }
     }
-}
+
