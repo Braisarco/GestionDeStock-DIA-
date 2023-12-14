@@ -3,7 +3,7 @@ using System.Xml.Linq;
 using Avalonia.Controls;
 using UI.core.gestionProveedores;
 
-namespace UI.views.Proveedores;
+namespace UI.views.vistaProveedores;
 
 public partial class MainWindow : Window
 {

@@ -7,7 +7,7 @@
         Width="500" Height="350"
         MinWidth="400" MinHeight="325"
         
-        x:Class="UI.views.Proveedores.ProveedorWindow"
+        x:Class="UI.views.vistaProveedores.ProveedorWindow"
         Title="Proveedor">
         
         <DockPanel>

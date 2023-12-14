@@ -7,16 +7,16 @@ using System.Xml.Linq;
 using Avalonia.Controls;
 using UI.core.gestionProveedores;
 
-namespace UI.views.Proveedores;
+namespace UI.views.vistaProveedores;
 
 public partial class ProveedorWindow : Window
 {
-    private global::UI.views.Proveedores.MainWindow _main;
+    private MainWindow _main;
     private int _posProveedor;
     private List<int> _listaPiezas = new List<int>();
     private int _posPieza;
 
-    public ProveedorWindow(global::UI.views.Proveedores.MainWindow main, int posProveedor)
+    public ProveedorWindow(MainWindow main, int posProveedor)
     {
         InitializeComponent();
 
