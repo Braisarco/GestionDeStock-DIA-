@@ -6,7 +6,7 @@ using UI.core.gestionProveedores;
 namespace UI.core.gestionPiezas;
 public class Pieza
 {
-    public Pieza(int codigo, string nombre, int unidades, List<Proveedor> proveedores)
+    public Pieza(int codigo, string nombre, int unidades, Proveedores proveedores)
     {
         this.codigo = codigo;
         this.nombre = nombre;
@@ -14,22 +14,17 @@ public class Pieza
         this.proveedores = proveedores;
     }
 
-    public Pieza()
-    {
-        this.piezas = new List<Pieza>();
-    }
-    public required int codigo { get; set; }
-    public required string nombre { get; set; }
-    public required int unidades { get; set; }
-    public List<Proveedor> proveedores { get; set; }
+    public Pieza() {}
+    public int codigo { get; set; }
+    public string nombre { get; set; }
+    public int unidades { get; set; }
+    public Proveedores proveedores { get; set; }
     
 
     public override string ToString()
     {
         return $"{this.codigo},{this.nombre}:{this.unidades}";
     }
-    
-    private List<Pieza> piezas = new List<Pieza>();
 
     public bool tienePieza(int c)
     {
@@ -37,66 +32,31 @@ public class Pieza
         return true;
     }
 
-    public void addPieza(Pieza p)
+    public XElement ToXElement()
     {
-        this.piezas.Add(p);
+        var toret = new XElement("pieza");
+        toret.Add(new XElement("codigo", this.codigo));
+        toret.Add(new XElement("nombre", this.nombre));
+        toret.Add(new XElement("unidades", this.unidades));
+
+        var piezas = new XElement("piezas");
+        foreach (var proveedor in proveedores.Lista())
+        {
+            piezas.Add(proveedor.ToXElement());
+        }
+        toret.Add(piezas);
+        
+        return toret;
     }
 
-    public void removePieza(Pieza p)
+    public Pieza(XElement xPieza)
     {
-        this.piezas.Remove(p);
+        this.codigo = int.Parse(xPieza.Element("codigo").Value);
+        this.nombre = xPieza.Element("cif").Value;
+        this.unidades = int.Parse(xPieza.Element("unidades").Value);
+        foreach (XElement proveedor in xPieza.Elements("proveedor"))
+        {
+            proveedores.AddProveedor(new Proveedor(proveedor));
+        }
     }
-    //-------XML-------
-    
-    public static void Guarda(List<Pieza> piezas, string filePath)
-    {
-        XElement root = new XElement("Piezas",
-            from pieza in piezas
-            select new XElement("Pieza",
-                new XElement("Codigo", pieza.codigo),
-                new XElement("Nombre", pieza.nombre),
-                new XElement("Unidades", pieza.unidades),
-                new XElement("Proveedores",
-                    from proveedor in pieza.proveedores
-                    select new XElement("Proveedor",
-                        new XElement("CIF", proveedor.CIF),
-                        new XElement("Nombre", proveedor.Nombre),
-                        new XElement("Direccion", proveedor.DireccionFacturacion),
-                        new XElement("CodigosPiezasProvistas", proveedor.PiezasProvistas()
-                        )
-                    )
-                )
-            )
-        );
-
-        root.Save(filePath);
-    }
-    
-    
-    public static List<Pieza> Recupera(string filePath)
-    {
-
-        XElement root = XElement.Load(filePath);
-
-        var piezas = from piezaXml in root.Elements("Pieza")
-            select new Pieza
-            {
-                codigo = int.Parse(piezaXml.Element("Codigo").Value),
-                nombre = piezaXml.Element("Nombre").Value,
-                unidades = int.Parse(piezaXml.Element("UnidadesDisponibles").Value),
-                proveedores = (
-                    from proveedorXml in piezaXml.Element("Proveedores").Elements("Proveedor")
-                    select new Proveedor
-                    {
-                        CIF = proveedorXml.Element("CIF").Value,
-                        Nombre = proveedorXml.Element("Nombre").Value,
-                        DireccionFacturacion = proveedorXml.Element("DireccionFacturacion").Value,
-                        codigosPiezasProvistas = int.Parse(proveedorXml.Element("CodigoPiezaProvista").Value)
-                    }
-                ).ToList()
-            };
-
-        return piezas.ToList();
-    }
-    
 }

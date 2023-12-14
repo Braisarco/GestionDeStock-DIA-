@@ -78,24 +78,12 @@ namespace UI.core.gestionClientes;
 
         public void fromXML(string fn)
         {
-            List<Cliente> toret = new List<Cliente>();
             XElement root = XElement.Load(fn);
-            IEnumerable<XElement> listaClientes = root.Elements("cliente");
 
-            foreach (XElement cliente in listaClientes)
+            foreach (XElement cliente in root.Elements("cliente"))
             {
-                string nombre = cliente.Element("nombre").Value;
-                string cif = cliente.Attribute("cif").Value;
-                string direccion = cliente.Element("direccion").Value;
-                List<int> codigos = new List<int>();
-                foreach (XElement codigo in cliente.Elements("codigo"))
-                {
-                    codigos.Add(int.Parse(codigo.Value));
-                }
-                toret.Add(new Cliente(cif,nombre,direccion,codigos));
+                this.listaClientes.Add(new Cliente(cliente));
             }
-
-            this.listaClientes = toret;
         }
 
         public List<Cliente> buscarClienteNombre(String nombre)

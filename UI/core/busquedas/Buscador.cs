@@ -40,7 +40,7 @@ public class Buscador
         List<Cliente> toret = new List<Cliente>();
         foreach (Cliente cliente in clientes.ListaClientes)
         {
-            if (cliente.Cif.StartsWith(cif))
+            if (cliente.CIF.StartsWith(cif))
             {
                 toret.Add(cliente);
             }
@@ -50,12 +50,12 @@ public class Buscador
         return toret;
     }
     
-    public List<Pedido> buscarPedidoCodigo(string codigo)
+    public List<Pedido> buscarPedidoCodigo(int codigo)
     {
         List<Pedido> toret = new List<Pedido>();
-        foreach (Pedido pedido in pedidos.ListaPedidos)
+        foreach (Pedido pedido in pedidos.Lista())
         {
-            if (pedido.Codigo.StartsWith(codigo))
+            if (pedido.Codigo == codigo)
             {
                 toret.Add(pedido);
             }
@@ -65,12 +65,12 @@ public class Buscador
         return toret;
     }
     
-    public List<Pieza> buscarPiezaCodigo(string codigo)
+    public List<Pieza> buscarPiezaCodigo(int codigo)
     {
         List<Pieza> toret = new List<Pieza>();
-        foreach (Pieza pieza in piezas.ListaPiezas)
+        foreach (Pieza pieza in piezas.Lista())
         {
-            if (pieza.Codigo.StartsWith(codigo))
+            if (pieza.codigo == codigo)
             {
                 toret.Add(pieza);
             }
@@ -83,9 +83,9 @@ public class Buscador
     public List<Pieza> buscarPiezaNombre(string nombre)
     {
         List<Pieza> toret = new List<Pieza>();
-        foreach (Pieza pieza in piezas.ListaPiezas)
+        foreach (Pieza pieza in piezas.Lista())
         {
-            if (pieza.Nombre.StartsWith(nombre))
+            if (pieza.nombre.StartsWith(nombre))
             {
                 toret.Add(pieza);
             }
@@ -98,7 +98,7 @@ public class Buscador
     public List<Proveedor> buscarProveedorNombre(string nombre)
     {
         List<Proveedor> toret = new List<Proveedor>();
-        foreach (Proveedor proveedor in proveedores.ListaProveedores)
+        foreach (Proveedor proveedor in proveedores.Lista())
         {
             if (proveedor.Nombre.StartsWith(nombre))
             {
@@ -113,9 +113,9 @@ public class Buscador
     public List<Proveedor> buscarProveedorCif(string cif)
     {
         List<Proveedor> toret = new List<Proveedor>();
-        foreach (Proveedor proveedor in proveedores.ListaProveedores)
+        foreach (Proveedor proveedor in proveedores.Lista())
         {
-            if (proveedor.Cif.StartsWith(cif))
+            if (proveedor.CIF.StartsWith(cif))
             {
                 toret.Add(proveedor);
             }
