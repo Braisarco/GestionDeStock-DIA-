@@ -28,7 +28,7 @@ namespace UI.core.gestionClientes;
             this.codigoPiezasVendidas = new List<int>();
             foreach (Pieza p in piezas)
             {
-                this.codigoPiezasVendidas.Add(p.CIF);
+                this.codigoPiezasVendidas.Add(p.codigo);
             }
         }
         
@@ -37,7 +37,6 @@ namespace UI.core.gestionClientes;
             this.cif = cif;
             this.nombre = nombre;
             this.direccionFacturacion = direccion;
-            this.codigoPiezasVendidas = new List<int>();
             this.codigoPiezasVendidas = piezas;
         }
         
