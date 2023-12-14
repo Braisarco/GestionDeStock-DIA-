@@ -1,0 +1,59 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        
+        Width="500" Height="550"
+        MinWidth="400" MinHeight="500"
+        
+        x:Class="UI.views.Proveedores.MainWindow"
+        Title="Proveedores">
+        
+        <DockPanel>
+                
+                <DockPanel Dock="Top" Margin="15">
+                        <!-- Cambiar de proveedor -->
+                        <DockPanel Dock="Top" Margin="5">
+                                <Label Content="Proveedor " VerticalAlignment="Center"></Label>
+                                <NumericUpDown Name="NudProveedor" Value="1" Increment="1"></NumericUpDown>
+                                <Label Content=" de " VerticalAlignment="Center"></Label>
+                                <Label Content="0" Name="LbNumProveedores" VerticalAlignment="Center"></Label>  
+                        </DockPanel>
+                        
+                        <!-- Botones proveedor -->                        
+                        <DockPanel Dock="Bottom" Margin="5" >
+                                <Button Name="BtVentanaAddProveedor" Content="Añadir"></Button>
+                                <Button Name="BtVentanaEditarProveedor" Content="Editar" Margin="10,0"></Button>
+                                <Button Name="BtEliminarProveedor" Content="Eliminar"></Button>
+                        </DockPanel>
+                </DockPanel>
+                
+                <!-- Campos proveedor-->
+                <StackPanel Margin="15">
+                <DockPanel Name="DockCIF" Margin="5">
+                        <Label Content="CIF" VerticalAlignment="Center"></Label>
+                        <TextBox Name="TbCIF" TextAlignment="Right" IsReadOnly="True"></TextBox>
+                </DockPanel>
+                        
+                <DockPanel Name="DockNombre" Margin="5">
+                        <Label Content="Nombre" VerticalAlignment="Center"></Label>
+                        <TextBox Name="TbNombre" TextAlignment="Right" IsReadOnly="True"></TextBox>
+                </DockPanel>
+                
+                <DockPanel Name="DockDireccionFacturacion" Margin="5">
+                        <Label Content="Direccion de Facturacion" VerticalAlignment="Center"></Label>
+                        <TextBox Name="TbDireccionFacturacion" TextAlignment="Right" IsReadOnly="True"></TextBox>
+                </DockPanel>
+                        
+                <StackPanel Name="DockPiezasProvistas" Margin="5,15,5,5" >
+                        <Label Name="LbNumPiezas" Content="Piezas Provistas: 0"></Label>
+                        <ListBox Name="LbPiezasProvistas" MaxHeight="200"></ListBox>
+                </StackPanel>
+                        
+                </StackPanel>
+                
+        </DockPanel>
+        
+        
+</Window>

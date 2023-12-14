@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<clientes>
+  <cliente cif="44444444Ñ">
+    <nombre>Brais</nombre>
+    <direccion>Ourense</direccion>
+  </cliente>
+  <cliente cif="66666666V">
+    <nombre>Miranda</nombre>
+    <direccion>Santiago</direccion>
+  </cliente>
+  <cliente cif="99999999L">
+    <nombre>Mopa</nombre>
+    <direccion>Vigo</direccion>
+    <codigo>534</codigo>
+    <codigo>436</codigo>
+    <codigo>7654</codigo>
+  </cliente>
+  <cliente cif="23452345">
+    <nombre>Alicia</nombre>
+    <direccion>Jures de arriba de cee no medio da coruña</direccion>
+  </cliente>
+</clientes>
