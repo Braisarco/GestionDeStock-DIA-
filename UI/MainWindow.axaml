@@ -2,14 +2,46 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:UI"
-        mc:Ignorable="d" Width="1080" Height="720"
-        MinWidth="600" MinHeight="200"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="UI.MainWindow"
-        Title="Clientes"
-        x:DataType="local:MainWindow"
-        DataContext="{ RelativeSource Self}">
-        
-        <Label>Bienvenidos a Gestion de Stock la Pélicula</Label>
-        
+        Title="Calendario">
+    
+        <ContentControl x:Name="MainContentControl">
+                <StackPanel>
+                        <DockPanel HorizontalAlignment="Center"
+                                   Height="30">
+                    
+                                <Button Name="VistaCalendario"
+                                        Margin="10,0"
+                                        Click="CambiarVistaCalendario">
+                                        Calendario
+                                </Button>
+                    
+                                <Button Name="VistaProveedores"
+                                        Margin="10,0"
+                                >
+                                        Proveedores
+                                </Button>
+                    
+                                <Button Name="VistaClientes"
+                                        Margin="10,0"
+                                >
+                                        Clientes
+                                </Button>
+                    
+                                <Button Name="VistaPedidos"
+                                        Margin="10,0"
+                                >
+                                        Pedidos
+                                </Button>
+                    
+                                <Button Name="VistaStock"
+                                        Margin="10,0"
+                                >
+                                        Stock
+                                </Button>
+                    
+                        </DockPanel>
+                </StackPanel>
+        </ContentControl>
 </Window>

@@ -5,9 +5,9 @@ using System.Xml.Serialization;
 
 namespace UI.core.gestionCompras;
 
-public class gestionCompra
+public class GestionCompra
 {
-    public gestionCompra()
+    public GestionCompra()
     {
         this.Compras = new List<Compra>();
     }

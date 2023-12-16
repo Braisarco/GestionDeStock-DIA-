@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\riderGestionStock\\UI\\UI.csproj": {}
+    "C:\\Users\\brais\\RiderProjects\\GestionDeStock-DIA-\\UI\\UI.csproj": {}
   },
   "projects": {
-    "D:\\riderGestionStock\\UI\\UI.csproj": {
+    "C:\\Users\\brais\\RiderProjects\\GestionDeStock-DIA-\\UI\\UI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\riderGestionStock\\UI\\UI.csproj",
+        "projectUniqueName": "C:\\Users\\brais\\RiderProjects\\GestionDeStock-DIA-\\UI\\UI.csproj",
         "projectName": "UI",
-        "projectPath": "D:\\riderGestionStock\\UI\\UI.csproj",
-        "packagesPath": "C:\\Users\\Brais\\.nuget\\packages\\",
-        "outputPath": "D:\\riderGestionStock\\UI\\obj\\",
+        "projectPath": "C:\\Users\\brais\\RiderProjects\\GestionDeStock-DIA-\\UI\\UI.csproj",
+        "packagesPath": "C:\\Users\\brais\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\brais\\RiderProjects\\GestionDeStock-DIA-\\UI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Brais\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\brais\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -75,7 +75,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.401\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     }
