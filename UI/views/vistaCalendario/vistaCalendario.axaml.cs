@@ -4,16 +4,18 @@ using System.Linq;
 using System.Reflection.PortableExecutable;
 using System.Text;
 using Avalonia.Controls;
+using UI.core;
+using UI.core.gestionPedidos;
 
 namespace UI.views.vistaCalendario;
 
 public partial class vistaCalendario : UserControl
 {
-    private List<string> cousas = new List<string>();
-    public vistaCalendario()
+    private Storage _storage;
+    public vistaCalendario(Storage storageInstance)
     {
-        cousas.Add("hola");
-        cousas.Add("chao");
+        _storage = storageInstance;
+        
         InitializeComponent();
         
         Calendar calendario = this.FindControl<Calendar>("calendario");
@@ -22,13 +24,15 @@ public partial class vistaCalendario : UserControl
         
         calendario.SelectedDatesChanged += (_,_) =>
         {
-            dia.Content = "Dia: " + calendario.SelectedDate.Value;
+            dia.Content = "Dia: " + DateOnly.FromDateTime(calendario.SelectedDate.Value);
             
             StringBuilder contenidoDia = new StringBuilder();
-            foreach (string cousa in cousas)
+            foreach (Pedido pedido in _storage.Pedidos.Lista())
             {
-                contenidoDia.Append($"- {cousa}\n");
-                
+                if (pedido.FechaHora.Equals(DateOnly.FromDateTime(calendario.SelectedDate.Value)))
+                {
+                    contenidoDia.Append($"- {pedido.ToString()}\n");
+                }
             }
 
             string contenido = contenidoDia.ToString();

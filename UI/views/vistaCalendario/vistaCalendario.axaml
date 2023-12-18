@@ -4,59 +4,61 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="UI.views.vistaCalendario.vistaCalendario">
-    <StackPanel>
-        <DockPanel HorizontalAlignment="Center"
-                   Height="30">
-                    
-            <Button Name="VistaCalendario"
-                    Margin="10,0">
-                Calendario
-            </Button>
-                    
-            <Button Name="VistaProveedores"
-                    Margin="10,0">
-                Proveedores
-            </Button>
-                    
-            <Button Name="VistaClientes"
-                    Margin="10,0">
-                Clientes
-            </Button>
-                    
-            <Button Name="VistaPedidos"
-                    Margin="10,0">
-                Pedidos
-            </Button>
-                    
-            <Button Name="VistaStock"
-                    Margin="10,0">
-                Stock
-            </Button>
-        </DockPanel>
-        
-        <DockPanel>
-            <DockPanel HorizontalAlignment="Center" 
-                       VerticalAlignment="Center"
-                       Margin="200,20">
-                <Calendar Name="calendario"/>
+    <ScrollViewer>
+        <StackPanel>
+            <DockPanel HorizontalAlignment="Center"
+                       Height="30">
+                        
+                <Button Name="VistaCalendario"
+                        Margin="10,0">
+                    Calendario
+                </Button>
+                        
+                <Button Name="VistaProveedores"
+                        Margin="10,0">
+                    Proveedores
+                </Button>
+                        
+                <Button Name="VistaClientes"
+                        Margin="10,0">
+                    Clientes
+                </Button>
+                        
+                <Button Name="VistaPedidos"
+                        Margin="10,0">
+                    Pedidos
+                </Button>
+                        
+                <Button Name="VistaStock"
+                        Margin="10,0">
+                    Stock
+                </Button>
             </DockPanel>
-        
-            <DockPanel HorizontalAlignment="Right"
-                       VerticalAlignment="Center"
-                       Height="700" Width="500"
-                       Margin="200,50">
-                <Border BorderBrush="Black"
-                        BorderThickness="2">
-                    <StackPanel Margin="10">
-                        <Label HorizontalAlignment="Center"
-                               Name="pickedDate"
-                               Content="Dia: "
-                               Margin="0,5,0,20"/>
-                        <TextBlock Name="eventos"/>
-                    </StackPanel>
-                </Border>
+            
+            <DockPanel>
+                <DockPanel HorizontalAlignment="Center" 
+                           VerticalAlignment="Center"
+                           Margin="200,20">
+                    <Calendar Name="calendario"/>
+                </DockPanel>
+            
+                <DockPanel HorizontalAlignment="Right"
+                           VerticalAlignment="Center"
+                           Height="700" Width="500"
+                           Margin="200,50">
+                    <Border BorderBrush="Black"
+                            BorderThickness="2">
+                        <StackPanel Margin="10">
+                            <Label HorizontalAlignment="Center"
+                                   Name="pickedDate"
+                                   Content="Dia: "
+                                   Margin="0,5,0,20"/>
+                            <TextBlock Name="eventos"/>
+                        </StackPanel>
+                    </Border>
+                </DockPanel>
             </DockPanel>
-        </DockPanel>
-    </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
     
 </UserControl>

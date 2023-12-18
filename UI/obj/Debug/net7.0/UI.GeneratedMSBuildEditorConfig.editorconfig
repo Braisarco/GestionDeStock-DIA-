@@ -13,19 +13,19 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = UI
-build_property.ProjectDir = C:\Users\brais\RiderProjects\GestionDeStock-DIA-\UI\
+build_property.ProjectDir = D:\riderGestionStock\UI\
 
-[C:/Users/brais/RiderProjects/GestionDeStock-DIA-/UI/App.axaml]
+[D:/riderGestionStock/UI/App.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/brais/RiderProjects/GestionDeStock-DIA-/UI/MainWindow.axaml]
+[D:/riderGestionStock/UI/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/brais/RiderProjects/GestionDeStock-DIA-/UI/views/vistaCalendario/vistaCalendario.axaml]
+[D:/riderGestionStock/UI/views/vistaCalendario/vistaCalendario.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/brais/RiderProjects/GestionDeStock-DIA-/UI/views/vistaProveedores/MainWindow.axaml]
+[D:/riderGestionStock/UI/views/vistaProveedores/MainWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[C:/Users/brais/RiderProjects/GestionDeStock-DIA-/UI/views/vistaProveedores/ProveedorWindow.axaml]
+[D:/riderGestionStock/UI/views/vistaProveedores/ProveedorWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml

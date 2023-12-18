@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Xml.Linq;
 using System.Xml.Serialization;
 
 namespace UI.core.gestionCompras;
@@ -32,7 +33,27 @@ public class GestionCompra
     {
         this.Compras.Add(compra);
     }
-    
+
+    public XElement toXML()
+    {
+        XElement toret = new XElement("compras");
+        foreach (Compra compra in Compras)
+        {
+            toret.Add(compra.toXML());
+        }
+
+        return toret;
+    }
+
+    public GestionCompra(XElement xCompras)
+    {
+        Compras = new List<Compra>();
+        foreach (XElement xCompra in xCompras.Elements("compra"))
+        {
+            Compras.Add(new Compra(xCompra));
+        }
+    }
+
     public void GuardarReparaciones()
     {
         var serializer = new XmlSerializer(typeof(List<Compra>));

@@ -61,7 +61,7 @@ namespace UI.core.gestionClientes;
             get => this.listaClientes;
         }
         
-        private XElement toXML()
+        public XElement toXML()
         {
             XElement root = new XElement("clientes");
             foreach (Cliente cliente in this.listaClientes)

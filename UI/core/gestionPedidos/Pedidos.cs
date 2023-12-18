@@ -9,7 +9,10 @@ public class Pedidos
 {
     private List<Pedido> pedidos;
 
-    public Pedidos() {}
+    public Pedidos()
+    {
+        pedidos = new List<Pedido>();
+    }
 
     public Pedidos(List<Pedido> pedidosArg)
     {

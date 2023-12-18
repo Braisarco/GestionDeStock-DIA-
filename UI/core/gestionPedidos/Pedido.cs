@@ -13,15 +13,16 @@ public class Pedido
 {
     public int Codigo { get; set; }
     public Cliente Cliente { get; set; }
-    public DateTime FechaHora { get; set; }
+    public DateOnly FechaHora { get; set; }
     
     public Piezas Piezas { get; set; }
 
-    public Pedido(int codigo, Cliente cliente, DateTime fechaHora)
+    public Pedido(int codigo, Cliente cliente, DateOnly fechaHora)
     {
         this.Codigo = codigo;
         this.Cliente = cliente;
         this.FechaHora = fechaHora;
+        this.Piezas = new Piezas();
     }
     
     public XElement ToXElement()
@@ -37,7 +38,7 @@ public class Pedido
     public Pedido(XElement xPedido)
     {
         Codigo = int.Parse(xPedido.Element("codigo").Value);
-        FechaHora = XmlConvert.ToDateTime(xPedido.Element("fecha").Value);
+        FechaHora = DateOnly.FromDateTime(XmlConvert.ToDateTime(xPedido.Element("fecha").Value));
         Cliente = new Cliente(xPedido.Element("cliente"));
         foreach (XElement pieza in xPedido.Elements("pieza"))
         {
@@ -45,4 +46,12 @@ public class Pedido
         }
     }
 
+    public override string ToString()
+    {
+        return $"PEDIDO\n" + 
+               $"\tCodigo: {Codigo}\n" +
+               $"\tCliente: {Cliente.ToString()}\n" +
+               $"\tPiezas: {Piezas.ToString()}\n" +
+               $"\tFecha: {FechaHora}\n";
+    }
 }

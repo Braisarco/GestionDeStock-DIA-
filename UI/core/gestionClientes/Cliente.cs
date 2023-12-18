@@ -18,6 +18,7 @@ namespace UI.core.gestionClientes;
         {
             this.cif = cif;
             this.nombre = nombre;
+            codigoPiezasCompradas = new List<int>();
         }
 
         public Cliente(string cif, string nombre, string direccion, IEnumerable<Pieza> piezas)
@@ -101,18 +102,25 @@ namespace UI.core.gestionClientes;
         {
             get
             {
-                StringBuilder toret = new StringBuilder();
-                foreach (int codigo in this.codigoPiezasCompradas)
+                if (this.codigoPiezasCompradas.Count == 0)
                 {
-                    toret.Append($" |{codigo}| ");
+                    return "La lista está vacia";
                 }
-                return toret.ToString();
+                else
+                {
+                    StringBuilder toret = new StringBuilder();
+                    foreach (int codigo in this.codigoPiezasCompradas)
+                    {
+                        toret.Append($" |{codigo}| ");
+                    }
+                    return toret.ToString();
+                }
             }
          }
         
         public override string ToString()
         {
-            return $"CIF: {this.cif}\nNombre: {this.nombre}\nDireccion: {this.direccionFacturacion}\nCodigos: {CodigoPiezasVendidasString}";
+            return $"CIF: {this.cif}, Nombre: {this.nombre}, Direccion: {this.direccionFacturacion}";
         }
     }
 
