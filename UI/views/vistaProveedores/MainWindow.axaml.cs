@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Xml.Linq;
 using Avalonia.Controls;
@@ -9,45 +10,131 @@ public partial class MainWindow : Window
 {
     private const string Filename = "proveedores.xml";
     public Proveedores _proveedores = new Proveedores();
-    public int _posProveedor = 0;
-    private int _posPieza = 0;
         
     public MainWindow()
     {
         InitializeComponent();
-        
-        /*Proveedor p1 = new Proveedor("A12345678", "Pepe", "Calle 123");
-        p1.AddPiezas( new int[] {123, 456, 789, 111});
-        
-        Proveedor p2 = new Proveedor("B87654321", "Paco", "Calle 456");
-        p2.AddPiezas( new int[] {444, 555, 8888, 999});
-        
-        _proveedores.AddProveedor(p1);
-        _proveedores.AddProveedor(p2);
-        
-        GuardarXML();*/
-        
-        NudProveedor.ValueChanged += (_, _) => ProveedorCambiado();
 
-        BtVentanaAddProveedor.Click += (_, _) => VentanaAddProveedor();
-        BtVentanaEditarProveedor.Click += (_, _) => VentanaEditarProveedor();
+        //CargarDatosEjemplo(12, 3);
+        
+        LbListProveedores.SelectionChanged += (_, _) => PrintProveedor();
+        BtModoAddProveedor.Click += (_, _) => ModoAddProveedor();
+        
+        BtModoEditarProveedor.Click += (_, _) => ModoEditarProveedor();
         BtEliminarProveedor.Click += (_, _) => EliminarProveedor();
+        BtAddProveedor.Click += (_, _) => AddProveedor();
+        BtEditarProveedor.Click += (_, _) => EditarProveedor();
+        
+        BtAddPieza.Click += (_, _) => AddPieza();
+        BtEliminarPieza.Click += (_, _) => EliminarPieza();
         
         CargarXML();
-        PrintProveedor();
-        ProveedorCambiado();
+        PrintListProveedores();
+        //PrintProveedor();
+        LbListProveedores.SelectedIndex = 0;
     }
 
+
+    
+    // === MODOS DE VISTA DE PROVEEDOR ===
+    
+    private void ModoNormalProveedor()
+    {
+        TbCIF.IsReadOnly = true;
+        TbNombre.IsReadOnly = true;
+        TbDireccionFacturacion.IsReadOnly = true;
+        PanelPiezas.IsVisible = true;
+        
+        PanelCambiarCampos.IsVisible = false;
+        BtAddProveedor.IsVisible = false;
+        BtEditarProveedor.IsVisible = false;
+    }
+    
+    private void ModoAddProveedor()
+    {
+        TbCIF.Text = "";
+        TbNombre.Text = "";
+        TbDireccionFacturacion.Text = "";
+        
+        TbCIF.IsReadOnly = false;
+        TbNombre.IsReadOnly = false;
+        TbDireccionFacturacion.IsReadOnly = false;
+        PanelPiezas.IsVisible = false;
+        
+        PanelCambiarCampos.IsVisible = true;
+        BtAddProveedor.IsVisible = true;
+        BtEditarProveedor.IsVisible = false;
+    }
+    
+    private void ModoEditarProveedor()
+    {
+        TbCIF.IsReadOnly = false;
+        TbNombre.IsReadOnly = false;
+        TbDireccionFacturacion.IsReadOnly = false;
+        PanelPiezas.IsVisible = false;
+        
+        PanelCambiarCampos.IsVisible = true;
+        BtAddProveedor.IsVisible = false;
+        BtEditarProveedor.IsVisible = true;
+    }
+    
+    
+    
+    // === CAMBIAR PROVEEDORES ===
+
+    private void AddProveedor()
+    {
+        try
+        {
+            var proveedor = new Proveedor(TbCIF.Text, TbNombre.Text, TbDireccionFacturacion.Text);
+            _proveedores.AddProveedor(proveedor);
+            LbListProveedores.SelectedIndex = _proveedores.NumProveedores() - 1;
+            PrintProveedor();
+            PrintListProveedores();
+        }
+        catch (Exception) {}
+    }
+    
+    private void EditarProveedor()
+    {
+        int index = LbListProveedores.SelectedIndex;
+        if (index < 0 || index > _proveedores.NumProveedores() - 1) { return; }
+        
+        var proveedor = _proveedores.Get(index);
+
+        if (!TbCIF.Text.Equals("") && !TbNombre.Text.Equals("") && !TbDireccionFacturacion.Text.Equals(""))
+        {
+            proveedor.CIF = TbCIF.Text;
+            proveedor.Nombre = TbNombre.Text;
+            proveedor.DireccionFacturacion = TbDireccionFacturacion.Text;
+            PrintListProveedores();
+            LbListProveedores.SelectedIndex = index;
+        }
+    }
+    
+    private void EliminarProveedor()
+    {
+        if (_proveedores.NumProveedores() > 0) {
+            _proveedores.EliminarProveedor(LbListProveedores.SelectedIndex);
+            --LbListProveedores.SelectedIndex;
+        }
+        
+        PrintListProveedores();
+        PrintProveedor();
+        GuardarXML();
+    }
+    
+    
+    
+    // === MOSTRAR PROVEEDORES ===
+    
     public void PrintProveedor()
     {
-        var proveedor = _proveedores.Get(_posProveedor);
+        ModoNormalProveedor();
+        var proveedor = _proveedores.Get(LbListProveedores.SelectedIndex);
 
-        if (proveedor == null) {
-            TbCIF.Text = "";
-            TbNombre.Text = "";
-            TbDireccionFacturacion.Text = "";
-            LbNumPiezas.Content = "Piezas Provistas: 0";
-
+        if (proveedor is null) {
+            ModoAddProveedor();
         } else {
             TbCIF.Text = proveedor.CIF;
             TbNombre.Text = proveedor.Nombre;
@@ -58,71 +145,64 @@ public partial class MainWindow : Window
             {
                 LbPiezasProvistas.Items.Add(pieza) ;
             }
-            LbNumPiezas.Content = "Piezas Provistas: " + proveedor.NumPiezas();
+            LbNumPiezasProvistas.Content = "Piezas Provistas: " + proveedor.NumPiezas();
             
-        }
-        LbNumProveedores.Content = _proveedores.NumProveedores().ToString();
-    }
-    
-    
-    
-    // === Ventanas ===
+            LbPiezasNoProvistas.Items.Clear();
 
-    private void VentanaAddProveedor()
-    {
-        new ProveedorWindow(this, -1).ShowDialog(this);
-    }
+            for (int i = 0; i < _proveedores.NumProveedores(); i++) {
+                foreach (var pieza in _proveedores.Get(i).PiezasProvistas())  {
+                    if (!proveedor.TienePieza(pieza)) {
+                        LbPiezasNoProvistas.Items.Add(pieza);
+                    }
+                }
+            }
+            LbNumPiezasNoProvsitas.Content = "Piezas No Provistas: " + LbPiezasNoProvistas.ItemCount;
 
-    public void AddProveedor(Proveedor proveedor)
-    {
-        _proveedores.AddProveedor(proveedor);
-        NudProveedor.Value = _proveedores.NumProveedores();
-        
-        PrintProveedor();
-        GuardarXML();
+        }
+        LbNumProveedores.Content = "Número de proveedores: " + _proveedores.NumProveedores();
     }
     
-    private void VentanaEditarProveedor()
+    
+    
+    private void PrintListProveedores()
     {
-        new ProveedorWindow(this, _posProveedor).ShowDialog(this);
-    }
-    
-    public void EditarProveedor(int pos, Proveedor proveedor)
-    {
-        _proveedores.EditarProveedor(pos, proveedor);
-        PrintProveedor();
-        GuardarXML();
-    }
-    
-    private void EliminarProveedor()
-    {
-        if (_proveedores.NumProveedores() > 0) {
-            _proveedores.EliminarProveedor(_posProveedor);
-        }
-
-        if (_posProveedor > _proveedores.NumProveedores() - 1) {
-            --NudProveedor.Value;
-        }
-        
-        PrintProveedor();
-        GuardarXML();
-    } 
-    
-    
-    
-    // === NumericUpDown ===
-    
-    private void ProveedorCambiado()
-    {
-        if (NudProveedor.Value == null || NudProveedor.Value < 1 ||
-                NudProveedor.Value > _proveedores.NumProveedores()) {
-            
-            NudProveedor.Value = 1;
-        }
-        else
+        LbListProveedores.Items.Clear();
+        foreach (var proveedor in _proveedores.Lista())
         {
-            _posProveedor = (int)(NudProveedor.Value) - 1;
-            PrintProveedor();
+            LbListProveedores.Items.Add(proveedor.Nombre) ;
+        }
+        LbNumProveedores.Content = "Número de proveedores: " + _proveedores.NumProveedores();
+        LbListProveedores.SelectedIndex = 0;
+    }
+    
+    
+    
+    // === PIEZAS ===
+
+    private void AddPieza()
+    {
+        var proveedor = _proveedores.Get(LbListProveedores.SelectedIndex);
+        int index = Convert.ToInt32(LbPiezasNoProvistas.SelectedIndex);
+
+        if (index >= 0 && index < LbPiezasNoProvistas.ItemCount)
+        {
+            proveedor.AddPieza(Convert.ToInt32(LbPiezasNoProvistas.SelectedItem));
+            GuardarXML();
+            PrintProveedor();    
+        }
+    }
+    
+    
+    private void EliminarPieza()
+    {
+        var proveedor = _proveedores.Get(LbListProveedores.SelectedIndex);
+        int index = Convert.ToInt32(LbPiezasProvistas.SelectedIndex);
+        
+        if (index >= 0 && index < LbPiezasProvistas.ItemCount)
+        {
+            proveedor.EliminarPieza(index);
+            GuardarXML();
+            PrintProveedor();    
         }
     }
     
@@ -133,7 +213,7 @@ public partial class MainWindow : Window
     private void GuardarXML()
     {
         XElement xProveedores = _proveedores.ToXElement();
-        xProveedores.Save(Filename);
+        //xProveedores.Save(Filename);
     }
     
     private void CargarXML()
@@ -142,5 +222,27 @@ public partial class MainWindow : Window
             var xProveedores = XElement.Load(Filename);
             _proveedores = new Proveedores(xProveedores);    
         }
+    }
+
+    
+    
+    // === EJEMPLO ===
+    
+    private void CargarDatosEjemplo(int numProveedores, int numPiezas)
+    {
+        for (int i = 0; i < numProveedores; i++)
+        {
+            String cif = "A" + i.ToString().PadLeft(8, '0'); //A00000001
+            String nombre = "Proveedor " + i;
+            String calle = "Calle " + i;
+            Proveedor proveedor = new Proveedor(cif, nombre, calle);
+
+            for (int j = 0; j < numPiezas; j++)
+            {
+                proveedor.AddPieza(1000 + 100 * i + j); //1001, 1002, 1003, 1004
+            }
+            _proveedores.AddProveedor(proveedor);
+        }
+        GuardarXML();
     }
 }
