@@ -56,8 +56,8 @@
             <ListBox Name="LbPiezasDisponibles" SelectionChanged="LbPiezasDisponibles_SelectionChanged"  MaxHeight="200"></ListBox>
         </StackPanel>
         <StackPanel Name="DockNumeroPiezas" Margin="5">
-            <Label Content="Número de Piezas" VerticalAlignment="Center"></Label>
-            <TextBox Name="TbNumeroPiezas" TextAlignment="Right" IsReadOnly="True"></TextBox>
+            <Label Content="Número de Piezas disponibles" VerticalAlignment="Center"></Label>
+            <TextBox Name="TbCantidadPiezas" TextAlignment="Right" IsReadOnly="True"></TextBox>
         </StackPanel>
         <StackPanel Name="StackPanelContenedor" Margin="5">
             <Label Content="Cantidad a Pedir" VerticalAlignment="Center"></Label>

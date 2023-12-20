@@ -16,6 +16,14 @@ public class Proveedor
         this.DireccionFacturacion = direccionFacturacion;
         this._piezasProvistas = new List<int>();
     }
+
+    public Proveedor()
+    {
+        CIF = "";
+        Nombre = "";
+        DireccionFacturacion = "";
+        _piezasProvistas = new List<int>();
+    }
     
     public string CIF { get; set; }
     

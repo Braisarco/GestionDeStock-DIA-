@@ -10,8 +10,7 @@ public partial class DlgVentanaFecha : Window
     public DlgVentanaFecha()
     {
         InitializeComponent();
-        MostrarFechaAleatoria();
-        var btAceptar = this.FindControl<Button>("btAceptar");
+        var btAceptar = this.FindControl<Button>("BtnAceptar");
         
 
         // Configura
@@ -19,17 +18,17 @@ public partial class DlgVentanaFecha : Window
         
         
     }
-    private void MostrarFechaAleatoria()
-    {
-        // Calcular y mostrar la fecha aleatoria
-        DateTime fechaHoy = DateTime.Now.Date;
-        DateOnly fechaEntrega = DateOnly.FromDateTime(fechaHoy.AddDays(3));
-        var fechaTextBlock = this.FindControl<TextBlock>("FechaTextBlock");
-        if (fechaTextBlock != null)
-        {
-            fechaTextBlock.Text = $"Fecha de Entrega: {fechaEntrega}";
-        }
-    }
+    // private void MostrarFechaAleatoria()
+    // {
+    //     // Calcular y mostrar la fecha aleatoria
+    //     DateTime fechaHoy = DateTime.Now.Date;
+    //     DateOnly fechaEntrega = DateOnly.FromDateTime(fechaHoy.AddDays(3));
+    //     var fechaTextBlock = this.FindControl<TextBlock>("FechaTextBlock");
+    //     if (fechaTextBlock != null)
+    //     {
+    //         fechaTextBlock.Text = $"Fecha de Entrega: {fechaEntrega}";
+    //     }
+    // }
 
     private void onAceptar()
     {

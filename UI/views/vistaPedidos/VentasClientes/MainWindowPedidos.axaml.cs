@@ -1,8 +1,10 @@
+using System;
 using System.IO;
 using System.Xml.Linq;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using UI.core.gestionClientes;
+using UI.core.gestionPedidos;
 using UI.core.gestionPiezas;
 
 namespace UI.views.vistaPedidos.VentasClientes;
@@ -12,17 +14,24 @@ public partial class MainWindowPedidos : UserControl
     private MainWindow parentWindow;
     public Piezas _piezas;
     public Clientes _clientes;
+    public Pedidos _pedidos;
     public int _posPieza = 0;
     private int _posProveedor = 0;
+    private Cliente selectedClient = new Cliente();
+    private Pieza selectedPieza = new Pieza();
     
     public MainWindowPedidos(MainWindow windowParent)
     {
         parentWindow = windowParent;
+        
+        _pedidos = parentWindow._storage.Pedidos;
         _piezas = parentWindow._storage.Piezas;
         _clientes = parentWindow._storage.Clientes;
+        
         InitializeComponent();
         PrintClientesList();
-        PrintPieza();
+        PrintPiezas();
+        this.BtnHacerPedido.Click += (_,_) => this.onHacerPedido();
     }
     
     //LbProeevoresAsociados a LbClientesDisponibles
@@ -30,27 +39,7 @@ public partial class MainWindowPedidos : UserControl
     {
         if (LbClientesDisponibles.SelectedItem != null)
         {
-            // Mostrar TextBox para introducir la cantidad de piezas a pedir
-            MostrarTextBoxCantidad();
-        }
-    }
-
-    private void MostrarTextBoxCantidad()
-    {
-        var tbCantidadPedido = new TextBox();
-        tbCantidadPedido.Name = "TbCantidadPedido"; // Asigna un nombre único
-
-
-
-        // Configurar el botón para hacer el pedido
-        var BtnHacerPedido = this.FindControl<Button>("BtnHacerPedido");
-        this.BtnHacerPedido!.Click += (_,_) => this.onHacerPedido();
-
-        var stackPanelContenedor = this.FindControl<StackPanel>("StackPanelContenedor");
-
-        if (stackPanelContenedor != null)
-        {
-            stackPanelContenedor.Children.Add(tbCantidadPedido);
+            selectedClient = _clientes.Get(LbClientesDisponibles.SelectedIndex);
         }
     }
     
@@ -59,11 +48,18 @@ public partial class MainWindowPedidos : UserControl
         var tbCantidadPedido = this.FindControl<TextBox>("TbCantidadPedido");
         if (tbCantidadPedido != null && int.TryParse(tbCantidadPedido.Text, out int cantidadPedida))
         {
-            var piezaSeleccionada = (Pieza)LbPiezasDisponibles.SelectedItem!;
+            Pieza piezaSeleccionada = _piezas.Get(LbPiezasDisponibles.SelectedIndex);
 
             if (cantidadPedida <= piezaSeleccionada.Unidades)
             {
-                piezaSeleccionada.Unidades += cantidadPedida;
+                _pedidos.Lista().Add(new Pedido((_pedidos.Lista().Count + 1),selectedClient,DateOnly.FromDateTime(DateTime.Now)
+                    , selectedPieza ,cantidadPedida));
+                selectedClient.CodigoPiezasVendidas.Add(selectedPieza.Codigo);
+                piezaSeleccionada.Unidades -= cantidadPedida;
+                parentWindow._storage.saveStoreContext();
+            }
+            else
+            {
                 MostrarVentanaNotificacion();
             }
         }
@@ -78,11 +74,10 @@ public partial class MainWindowPedidos : UserControl
     private void LbPiezasDisponibles_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         _posPieza = LbPiezasDisponibles.SelectedIndex;
-        PrintPieza();
-        var piezaSeleccionada = (Pieza)LbPiezasDisponibles.SelectedItem;
+        selectedPieza = _piezas.Get(_posPieza);
 
         // Mostrar la cantidad de piezas disponibles
-        MostrarCantidadPiezas(piezaSeleccionada.Unidades);
+        MostrarCantidadPiezas(selectedPieza.Unidades);
     }
 
     private void MostrarCantidadPiezas(int piezaSeleccionadaUnidades)
@@ -94,22 +89,7 @@ public partial class MainWindowPedidos : UserControl
         }
     }
     
-    private void BtnHacerPedido_Click(object sender, RoutedEventArgs e)
-    {
-        var tbCantidadPedido = this.FindControl<TextBox>("TbCantidadPedido");
-        if (tbCantidadPedido != null && int.TryParse(tbCantidadPedido.Text, out int cantidadPedida))
-        {
-            var piezaSeleccionada = (Pieza)LbPiezasDisponibles.SelectedItem!;
-
-            if (cantidadPedida <= piezaSeleccionada.Unidades)
-            {
-                 piezaSeleccionada.Unidades += cantidadPedida;
-            }
-        }
-    }
-    
-
-    public void PrintPieza()
+    public void PrintPiezas()
     {
         LbPiezasDisponibles.Items.Clear(); // Limpiar antes de agregar elementos
 

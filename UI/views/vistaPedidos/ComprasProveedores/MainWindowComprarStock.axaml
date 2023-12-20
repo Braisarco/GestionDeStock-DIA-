@@ -56,15 +56,15 @@
                         <ListBox Name="LbProveedoresAsociados" SelectionChanged="LbProeevoresAsociados_SelectionChanged" MaxHeight="200"/>
                 </StackPanel>
                 <StackPanel Name="DockNumeroPiezas" Margin="5">
-                        <Label Content="Número de Piezas" VerticalAlignment="Center"></Label>
-                        <TextBox Name="TbNumeroPiezas" TextAlignment="Right" IsReadOnly="True"></TextBox>
+                        <Label Content="Número de Piezas disponibles" VerticalAlignment="Center"></Label>
+                        <TextBox Name="TbCantidadPiezas" TextAlignment="Right" IsReadOnly="True"></TextBox>
                 </StackPanel>
                 
                 <StackPanel Name="StackPanelContenedor" Margin="5">
                         <Label Content="Cantidad a Pedir" VerticalAlignment="Center"></Label>
                         <TextBox Name="TbCantidadPedido" TextAlignment="Right" Watermark="Introduce la cantidad a pedir"></TextBox>
                         <Label Content="Cantidad a Pedir" VerticalAlignment="Center"></Label>
-                        <Button  Margin="0,5,0,0" Name="btnHacerPedido" Content="Hacer Pedido"/>
+                        <Button  Margin="0,5,0,0" Name="BtnHacerPedido" Content="Hacer Pedido"/>
                 </StackPanel>
         </StackPanel>
 </UserControl>

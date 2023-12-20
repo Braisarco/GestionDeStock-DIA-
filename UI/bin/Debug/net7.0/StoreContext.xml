@@ -1,11 +1,61 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Storage>
-  <pedidos />
-  <compras />
+  <pedidos>
+    <pedido>
+      <codigo>1</codigo>
+      <fecha>20/12/2023</fecha>
+      <cliente cif="0000000T">
+        <nombre>Alicia</nombre>
+        <direccion>Ourense ESEI</direccion>
+      </cliente>
+      <pieza>
+        <codigo>0003</codigo>
+        <nombre>Arandela</nombre>
+        <unidades>40</unidades>
+        <proveedores-piezas />
+      </pieza>
+      <unidades>50</unidades>
+    </pedido>
+    <pedido>
+      <codigo>2</codigo>
+      <fecha>20/12/2023</fecha>
+      <cliente cif="0000000T">
+        <nombre>Alicia</nombre>
+        <direccion>Ourense ESEI</direccion>
+        <codigo>0003</codigo>
+      </cliente>
+      <pieza>
+        <codigo>0003</codigo>
+        <nombre>Arandela</nombre>
+        <unidades>35</unidades>
+        <proveedores-piezas />
+      </pieza>
+      <unidades>5</unidades>
+    </pedido>
+  </pedidos>
+  <compras>
+    <compra>
+      <proveedor>
+        <cif>78810156N</cif>
+        <nombre>Brais</nombre>
+        <direccion_facturacion>Ourense ESEI</direccion_facturacion>
+        <piezas_provistas />
+      </proveedor>
+      <pieza>
+        <codigo>0002</codigo>
+        <nombre>Tuerca</nombre>
+        <unidades>150</unidades>
+        <proveedores-piezas />
+      </pieza>
+      <cantidad>90</cantidad>
+      <fecha>20/12/2023</fecha>
+    </compra>
+  </compras>
   <clientes>
     <cliente cif="0000000T">
       <nombre>Alicia</nombre>
       <direccion>Ourense ESEI</direccion>
+      <codigo>0003</codigo>
     </cliente>
   </clientes>
   <piezas>
@@ -18,13 +68,13 @@
     <pieza>
       <codigo>0002</codigo>
       <nombre>Tuerca</nombre>
-      <unidades>60</unidades>
+      <unidades>150</unidades>
       <proveedores-piezas />
     </pieza>
     <pieza>
       <codigo>0003</codigo>
       <nombre>Arandela</nombre>
-      <unidades>90</unidades>
+      <unidades>35</unidades>
       <proveedores-piezas />
     </pieza>
     <pieza>

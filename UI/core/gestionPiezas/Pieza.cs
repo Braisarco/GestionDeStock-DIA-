@@ -16,7 +16,15 @@ public class Pieza
         this.Unidades = unidades;
         this._proveedoresPieza = new List<string>();
     }
-    
+
+    public Pieza()
+    {
+        this.Codigo = "";
+        this.Nombre = "";
+        this.Unidades = 0;
+        this._proveedoresPieza = new List<string>();
+    }
+
     public string Nombre{ get; set; }
     
     public string Codigo { get; set; }

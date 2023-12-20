@@ -5,71 +5,44 @@ using System.Xml.Linq;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using UI.core.gestionCompras;
 using UI.core.gestionPiezas;
+using UI.core.gestionProveedores;
 
 namespace UI.views.vistaPedidos.ComprasProveedores;
 
 public partial class MainWindowComprarStock : UserControl
 {
     
-    private const string Filename = "piezas.xml";
     private MainWindow parentWindow;
-    private Piezas Piezas;
-    public int PosPieza;
+    public Piezas _piezas;
+    public Proveedores _proveedores;
+    public GestionCompra _compras;
+    public int _posPieza = 0;
+    private int _posProveedor = 0;
+    private Proveedor selectedProveedor = new Proveedor();
+    private Pieza selectedPieza = new Pieza();
     
     public MainWindowComprarStock(MainWindow windowParent)
     {
         parentWindow = windowParent;
-        Piezas = parentWindow._storage.Piezas;
+        
+        _compras = parentWindow._storage.Compras;
+        _piezas = parentWindow._storage.Piezas;
+        _proveedores = parentWindow._storage.Proveedores;
         
         InitializeComponent();
-        
-        PrintPiezasList();
+        PrintProveedoresList();
+        PrintPiezas();
+        this.BtnHacerPedido.Click += (_,_) => this.onHacerPedido();
     }
-    private void LbPiezasDisponibles_SelectionChanged(object? sender, SelectionChangedEventArgs selectionChangedEventArgs)
-    {
-        PosPieza = LbPiezasDisponibles.SelectedIndex;
-        PrintPieza();
-        var piezaSeleccionada = (Pieza)LbPiezasDisponibles.SelectedItem!;
-
-        // Mostrar la cantidad de piezas disponibles
-        MostrarCantidadPiezas(piezaSeleccionada.Unidades);
-    }
-
-    private void MostrarCantidadPiezas(int piezaSeleccionadaUnidades)
-    {
-        var tbCantidadPiezas = this.FindControl<TextBox>("TbCantidadPiezas"); 
-        if (tbCantidadPiezas != null)
-        {
-            tbCantidadPiezas.Text = piezaSeleccionadaUnidades.ToString();
-        }
-    }
-
-    private void LbProeevoresAsociados_SelectionChanged(object? sender, SelectionChangedEventArgs selectionChangedEventArgs)
+    
+    //LbProeevoresAsociados a LbClientesDisponibles
+    private void LbProeevoresAsociados_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         if (LbProveedoresAsociados.SelectedItem != null)
         {
-            // Mostrar TextBox para introducir la cantidad de piezas a pedir
-            MostrarTextBoxCantidad();
-        }
-    }
-
-    private void MostrarTextBoxCantidad()
-    {
-        var tbCantidadPedido = new TextBox();
-        tbCantidadPedido.Name = "TbCantidadPedido"; // Asigna un nombre único
-
-        
-        
-        // Configurar el botón para hacer el pedido
-        var btnHacerPedido = this.FindControl<Button>("btnHacerPedido");
-        this.btnHacerPedido!.Click += (_, _) => this.onHacerPedido();
-        
-        var stackPanelContenedor = this.FindControl<StackPanel>("StackPanelContenedor");
-        
-        if (stackPanelContenedor != null)
-        {
-            stackPanelContenedor.Children.Add(tbCantidadPedido);
+            selectedProveedor = _proveedores.Get(LbProveedoresAsociados.SelectedIndex);
         }
     }
     
@@ -78,47 +51,37 @@ public partial class MainWindowComprarStock : UserControl
         var tbCantidadPedido = this.FindControl<TextBox>("TbCantidadPedido");
         if (tbCantidadPedido != null && int.TryParse(tbCantidadPedido.Text, out int cantidadPedida))
         {
-            var piezaSeleccionada = (Pieza)LbPiezasDisponibles.SelectedItem!;
-
-            if (cantidadPedida <= piezaSeleccionada.Unidades)
-            {
-                 piezaSeleccionada.Unidades += cantidadPedida;
-                 MostrarVentanaNotificacion();
-            }
+            Pieza piezaSeleccionada = _piezas.Get(LbPiezasDisponibles.SelectedIndex);
+            
+            _compras.Add(new Compra(selectedProveedor ,DateOnly.FromDateTime(DateTime.Now), selectedPieza ,cantidadPedida));
+            piezaSeleccionada.Unidades += cantidadPedida;
+            parentWindow._storage.saveStoreContext();
         }
     }
-
-    async void MostrarVentanaNotificacion()
+    
+    private void LbPiezasDisponibles_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        var dlgVentanaFecha = new DlgVentanaFecha();
-        await dlgVentanaFecha.ShowDialog(parentWindow);
+        _posPieza = LbPiezasDisponibles.SelectedIndex;
+        selectedPieza = _piezas.Get(_posPieza);
+
+        // Mostrar la cantidad de piezas disponibles
+        MostrarCantidadPiezas(selectedPieza.Unidades);
     }
 
-
-    public void PrintPieza()
+    private void MostrarCantidadPiezas(int piezaSeleccionadaUnidades)
     {
-        var pieza = Piezas.Get(PosPieza);
-
-        
-            
-            LbProveedoresAsociados.Items.Clear();
-            foreach (var proveedor in pieza.ProveedoresPieza())
-            {
-                LbProveedoresAsociados.Items.Add(proveedor) ;
-            }
-            LbProveedores.Content = "Proveedores Piezas: " + pieza.NumProveedores();
-            LbPiezasDisponibles.SelectedIndex = PosPieza;
-       
-        LbPieza.Content = "Piezas: " + Piezas.NumPiezas();
+        var tbCantidadPiezas = this.FindControl<TextBox>("TbCantidadPiezas"); // Asegúrate de tener un TextBox con este nombre en tu interfaz
+        if (tbCantidadPiezas != null)
+        {
+            tbCantidadPiezas.Text = piezaSeleccionadaUnidades.ToString();
+        }
     }
     
-   
-    
-    private void PrintPiezasList()
+    public void PrintPiezas()
     {
         LbPiezasDisponibles.Items.Clear(); // Limpiar antes de agregar elementos
 
-        foreach (var pieza in Piezas.Lista())
+        foreach (var pieza in _piezas.Lista())
         {
             // Crear un nuevo elemento ListBoxItem y asignar el contenido
             var listBoxItem = new ListBoxItem();
@@ -128,22 +91,26 @@ public partial class MainWindowComprarStock : UserControl
             LbPiezasDisponibles.Items.Add(listBoxItem);
         }
 
-        LbPieza.Content = $"Piezas: {Piezas.NumPiezas()}";
-    }
-    // === XML ===
-    
-    private void GuardarXML()
-    {
-        XElement xPiezas = Piezas.toXML();
-        xPiezas.Save(Filename);
+        LbPieza.Content = $"Piezas: {_piezas.NumPiezas()}";
     }
     
-    private void CargarXml()
+   
+    
+    private void PrintProveedoresList()
     {
-        if (File.Exists(Filename)) { 
-            var xPiezas = XElement.Load(Filename);
-            Piezas = new Piezas(xPiezas);    
+        LbProveedoresAsociados.Items.Clear(); // Limpiar antes de agregar elementos
+
+        foreach (var proveedor in _proveedores.Lista())
+        {
+            // Crear un nuevo elemento ListBoxItem y asignar el contenido
+            var listBoxItem = new ListBoxItem();
+            listBoxItem.Content = $"{proveedor.CIF} - {proveedor.Nombre}- {proveedor.DireccionFacturacion}";
+
+            // Agregar el elemento ListBoxItem al ListBox
+            LbProveedoresAsociados.Items.Add(listBoxItem);
         }
+
+        LbProveedores.Content = $"Proveedores: {_proveedores.NumProveedores()}";
     }
     
     //***** HEADER USAGE *****

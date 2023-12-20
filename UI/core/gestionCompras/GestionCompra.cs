@@ -75,7 +75,7 @@ public class GestionCompra
         }
     }
 
-    private List<Compra> Compras;
+    public List<Compra> Compras { get; set; }
 
     public object Get(int pos)
     {

@@ -42,6 +42,14 @@ namespace UI.core.gestionClientes;
                 Console.WriteLine("El cliente no puede ser nulo");
             }
         }
+        
+        public Cliente Get(int pos)
+        {
+            if (pos >= 0 && pos < listaClientes.Count) {
+                return listaClientes[pos];    
+            }
+            return null;
+        }
 
         public void EliminarCliente(string cif)
         {

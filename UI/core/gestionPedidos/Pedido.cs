@@ -15,14 +15,16 @@ public class Pedido
     public Cliente Cliente { get; set; }
     public DateOnly FechaHora { get; set; }
     
-    public Piezas Piezas { get; set; }
+    public Pieza Pieza { get; set; }
+    public int Unidades { get; set; }
 
-    public Pedido(int codigo, Cliente cliente, DateOnly fechaHora)
+    public Pedido(int codigo, Cliente cliente, DateOnly fechaHora, Pieza pieza, int unidades)
     {
         this.Codigo = codigo;
         this.Cliente = cliente;
         this.FechaHora = fechaHora;
-        this.Piezas = new Piezas();
+        this.Pieza = pieza;
+        this.Unidades = unidades;
     }
     
     public XElement ToXElement()
@@ -31,27 +33,27 @@ public class Pedido
         toret.Add(new XElement("codigo", Codigo));
         toret.Add(new XElement("fecha", FechaHora));
         toret.Add(Cliente.toXML());
-        toret.Add(Piezas.toXML());
+        toret.Add(Pieza.ToXElement());
+        toret.Add(new XElement("unidades", Unidades));
         return toret;
     }
 
     public Pedido(XElement xPedido)
     {
         Codigo = int.Parse(xPedido.Element("codigo").Value);
-        FechaHora = DateOnly.FromDateTime(XmlConvert.ToDateTime(xPedido.Element("fecha").Value));
+        FechaHora = DateOnly.FromDateTime(DateTime.ParseExact(xPedido.Element("fecha").Value, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None));
         Cliente = new Cliente(xPedido.Element("cliente"));
-        foreach (XElement pieza in xPedido.Elements("pieza"))
-        {
-            Piezas.AddPieza(new Pieza(pieza));
-        }
+        Pieza = new Pieza(xPedido.Element("pieza"));
+        Unidades = int.Parse(xPedido.Element("unidades").Value);
     }
 
     public override string ToString()
     {
         return $"PEDIDO\n" + 
                $"\tCodigo: {Codigo}\n" +
-               $"\tCliente: {Cliente.ToString()}\n" +
-               $"\tPiezas: {Piezas.ToString()}\n" +
+               $"\tCliente: {Cliente}\n" +
+               $"\tPieza: {Pieza}\n" +
+               $"\tUnidades: {Unidades}\n" +
                $"\tFecha: {FechaHora}\n";
     }
 }

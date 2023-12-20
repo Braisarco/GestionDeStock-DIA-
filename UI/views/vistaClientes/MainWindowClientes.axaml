@@ -120,7 +120,7 @@
                                                                                 
                                                                                         <DockPanel Margin="0,10">
                                                                                                 <Label VerticalAlignment="Center">Lista de productos: </Label>
-                                                                                                <TextBlock VerticalAlignment="Center"  Text="{Binding CodigoPiezasVendidas}"></TextBlock>
+                                                                                                <TextBlock VerticalAlignment="Center"  Text="{Binding CodigoPiezasVendidasString}"></TextBlock>
                                                                                         </DockPanel>
                                                                                 </StackPanel>
                                                                         </Border>

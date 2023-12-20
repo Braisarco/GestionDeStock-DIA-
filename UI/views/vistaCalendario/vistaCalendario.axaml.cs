@@ -6,6 +6,7 @@ using System.Text;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
 using UI.core;
+using UI.core.gestionCompras;
 using UI.core.gestionPedidos;
 
 namespace UI.views.vistaCalendario;
@@ -35,6 +36,13 @@ public partial class vistaCalendario : UserControl
                 if (pedido.FechaHora.Equals(DateOnly.FromDateTime(calendario.SelectedDate.Value)))
                 {
                     contenidoDia.Append($"- {pedido.ToString()}\n");
+                }
+            }
+            foreach (Compra compra in _storage.Compras.Compras)
+            {
+                if (compra.fechaHoraEntrega.Equals(DateOnly.FromDateTime(calendario.SelectedDate.Value)))
+                {
+                    contenidoDia.Append($"- {compra.ToString()}\n");
                 }
             }
 
