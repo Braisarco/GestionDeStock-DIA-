@@ -1,0 +1,136 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vistaClientes="clr-namespace:UI.views.vistaClientes"
+        mc:Ignorable="d" 
+        Width="850" Height="700"
+        MinWidth="850" MinHeight="700"
+        x:Class="UI.views.vistaClientes.MainWindowClientes"
+        x:DataType="vistaClientes:MainWindowClientes"
+        DataContext="{ RelativeSource Self}">
+        
+        <ScrollViewer>
+                <StackPanel>
+                        <DockPanel HorizontalAlignment="Center"
+                                   Height="30">
+                    
+                                <Button Name="VistaCalendario"
+                                        Margin="10,0"
+                                        Click="CambiarVistaCalendario">
+                                        Calendario
+                                </Button>
+                    
+                                <Button Name="VistaProveedores"
+                                        Margin="10,0"
+                                        Click="CambiarVistaProveedores">
+                                        Proveedores
+                                </Button>
+                    
+                                <Button Name="VistaClientes"
+                                        Margin="10,0"
+                                        Click="CambiarVistaClientes">
+                                        Clientes
+                                </Button>
+                    
+                                <Button Name="VistaPedidos"
+                                        Margin="10,0"
+                                        Click="CambiarVistaPedidos">
+                                        Pedidos
+                                </Button>
+                                
+                                <Button Name="VistaComprarStock"
+                                        Margin="10,0"
+                                        Click="CambiarVistaComprarStock">
+                                        Comprar
+                                </Button>
+                    
+                                <Button Name="VistaStock"
+                                        Margin="10,0"
+                                        Click="CambiarVistaStock">
+                                        Stock
+                                </Button>
+                    
+                        </DockPanel>
+                        <DockPanel Margin="20">
+                                <StackPanel>
+                                        
+                                        <TextBox HorizontalAlignment="Center"
+                                                 Width="680"
+                                                 MaxWidth="900"
+                                                 Watermark="Buscar"
+                                                 VerticalAlignment="Center"
+                                                 Name="buscador"/>
+                                        
+                                        <Border BorderBrush="White"
+                                                BorderThickness="2"
+                                                CornerRadius="3"
+                                                Padding="10"
+                                                Margin="20,20">
+                                                <DockPanel>
+                                                        <Label VerticalAlignment="Center">Nombre: </Label>
+                                                        <TextBox Margin="10,0" 
+                                                                 Width="100"
+                                                                 Name="newName"></TextBox>
+                                                        
+                                                        <Label VerticalAlignment="Center">CIF: </Label>
+                                                        <TextBox Margin="10,0" 
+                                                                 Width="70"
+                                                                 Name="newCIF"></TextBox>
+                                                        
+                                                        <Label VerticalAlignment="Center">Direccion: </Label>
+                                                        <TextBox Margin="10,0" 
+                                                                 MinWidth="150" MaxWidth="280"
+                                                                 Name="newDireccion"></TextBox>
+                                                        
+                                                        <Button HorizontalAlignment="Right" Name="nuevoCliente">Añadir</Button>
+                                                </DockPanel>
+                                        </Border>
+                                        <StackPanel Margin="5,20">
+                                                <ItemsControl Name="ItemsControl" ItemsSource="{Binding ListaClientes }">
+                                                        <ItemsControl.ItemTemplate>
+                                                                <DataTemplate>
+                                                                        <Border Background="SlateGray"
+                                                                                BorderBrush="White"
+                                                                                BorderThickness="2"
+                                                                                CornerRadius="3"
+                                                                                Padding="4"
+                                                                                Margin="0,20">
+                                                                                <StackPanel>
+                                                                                        <DockPanel Margin="0,10">
+                                                                                                <Label VerticalAlignment="Center">Nombre: </Label>
+                                                                                                <TextBlock VerticalAlignment="Center"
+                                                                                                           Text="{Binding Nombre}"></TextBlock>
+                                                                                                <DockPanel HorizontalAlignment="Right">
+                                                                                                        <Button Margin="5,0"
+                                                                                                                Click="EliminarCliente"
+                                                                                                                Tag="{Binding CIF}">Eliminar</Button>
+                                                                                                </DockPanel>
+                                                                                        </DockPanel>
+                                                                                        <DockPanel Margin="0,10">
+                                                                                                <Label VerticalAlignment="Center">CIF: </Label>
+                                                                                                <TextBlock VerticalAlignment="Center"
+                                                                                                           Text="{Binding CIF}"></TextBlock>
+                                                                                        </DockPanel>
+                                                                                        <DockPanel Margin="0,10">
+                                                                                                <Label VerticalAlignment="Center">Direccion: </Label>
+                                                                                                <TextBlock VerticalAlignment="Center"
+                                                                                                           Text="{Binding DireccionFacturacion}"></TextBlock>
+                                                                                        </DockPanel>
+                                                                                
+                                                                                        <DockPanel Margin="0,10">
+                                                                                                <Label VerticalAlignment="Center">Lista de productos: </Label>
+                                                                                                <TextBlock VerticalAlignment="Center"  Text="{Binding CodigoPiezasVendidas}"></TextBlock>
+                                                                                        </DockPanel>
+                                                                                </StackPanel>
+                                                                        </Border>
+                                                                </DataTemplate>
+                                                        </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                        </StackPanel>
+                                </StackPanel>
+                        </DockPanel>
+                </StackPanel>
+        </ScrollViewer>
+        
+</UserControl>

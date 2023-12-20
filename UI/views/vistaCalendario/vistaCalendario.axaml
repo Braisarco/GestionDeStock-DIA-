@@ -2,50 +2,63 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" 
+        Width="850" Height="700"
+        MinWidth="850" MinHeight="700"
         x:Class="UI.views.vistaCalendario.vistaCalendario">
     <ScrollViewer>
         <StackPanel>
             <DockPanel HorizontalAlignment="Center"
                        Height="30">
-                        
-                <Button Name="VistaCalendario"
-                        Margin="10,0">
-                    Calendario
-                </Button>
-                        
-                <Button Name="VistaProveedores"
-                        Margin="10,0">
-                    Proveedores
-                </Button>
-                        
-                <Button Name="VistaClientes"
-                        Margin="10,0">
-                    Clientes
-                </Button>
-                        
-                <Button Name="VistaPedidos"
-                        Margin="10,0">
-                    Pedidos
-                </Button>
-                        
-                <Button Name="VistaStock"
-                        Margin="10,0">
-                    Stock
-                </Button>
+                
+                    <Button Name="VistaCalendario"
+                        Margin="10,0"
+                        Click="CambiarVistaCalendario">
+                        Calendario
+                    </Button>
+                    
+                    <Button Name="VistaProveedores"
+                            Margin="10,0"
+                            Click="CambiarVistaProveedores">
+                        Proveedores
+                    </Button>
+                    
+                    <Button Name="VistaClientes"
+                            Margin="10,0"
+                            Click="CambiarVistaClientes">
+                        Clientes
+                    </Button>
+                    
+                    <Button Name="VistaPedidos"
+                            Margin="10,0"
+                            Click="CambiarVistaPedidos">
+                        Pedidos
+                    </Button>
+                
+                    <Button Name="VistaComprarStock"
+                            Margin="10,0"
+                            Click="CambiarVistaComprarStock">
+                        Comprar
+                    </Button>
+                    
+                    <Button Name="VistaStock"
+                            Margin="10,0"
+                            Click="CambiarVistaStock">
+                        Stock
+                    </Button>
             </DockPanel>
             
             <DockPanel>
                 <DockPanel HorizontalAlignment="Center" 
                            VerticalAlignment="Center"
-                           Margin="200,20">
+                           Margin="20,20">
                     <Calendar Name="calendario"/>
                 </DockPanel>
             
                 <DockPanel HorizontalAlignment="Right"
                            VerticalAlignment="Center"
-                           Height="700" Width="500"
-                           Margin="200,50">
+                           Height="600" Width="500"
+                           Margin="20,50">
                     <Border BorderBrush="Black"
                             BorderThickness="2">
                         <StackPanel Margin="10">

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
@@ -6,57 +7,90 @@ using UI.core.gestionProveedores;
 namespace UI.core.gestionPiezas;
 public class Pieza
 {
-    public Pieza(int codigo, string nombre, int unidades, Proveedores proveedores)
-    {
-        this.codigo = codigo;
-        this.nombre = nombre;
-        this.unidades = unidades;
-        this.proveedores = proveedores;
-    }
-
-    public Pieza() {}
-    public int codigo { get; set; }
-    public string nombre { get; set; }
-    public int unidades { get; set; }
-    public Proveedores proveedores { get; set; }
+    private List<string> _proveedoresPieza;
     
-
-    public override string ToString()
+    public Pieza(string nombre, int unidades, string codigo)
     {
-        return $"{this.codigo},{this.nombre}:{this.unidades}";
+        this.Codigo = codigo;
+        this.Nombre = nombre;
+        this.Unidades = unidades;
+        this._proveedoresPieza = new List<string>();
+    }
+    
+    public string Nombre{ get; set; }
+    
+    public string Codigo { get; set; }
+    
+    public int Unidades { get; set; }
+
+    public List<string> ProveedoresPieza()
+    {
+        return new List<string>(_proveedoresPieza);
     }
 
-    public bool tienePieza(int c)
+    public void AddProveedor(string proveedor)
     {
-        //return proveedores.Codigo.equals(c);
-        return true;
+        _proveedoresPieza.Add(proveedor);
+    }
+    
+    public void AddProveedores(IEnumerable<string> proveedor)
+    {
+        _proveedoresPieza.AddRange(proveedor);
+    }
+
+    public string Get(int pos)
+    {
+        if (pos >= 0 && pos < _proveedoresPieza.Count) {
+            return _proveedoresPieza[pos];    
+        }
+        return "";
+    }
+    public bool TieneProveedor(string proveedor)
+    {
+        return _proveedoresPieza.Contains(proveedor);
+    }
+    
+    public void EliminarProveedor(int pos)
+    {
+        _proveedoresPieza.RemoveAt(pos);
+    }
+
+    public int NumProveedores()
+    {
+        return _proveedoresPieza.Count;
     }
 
     public XElement ToXElement()
     {
         var toret = new XElement("pieza");
-        toret.Add(new XElement("codigo", this.codigo));
-        toret.Add(new XElement("nombre", this.nombre));
-        toret.Add(new XElement("unidades", this.unidades));
+        toret.Add(new XElement("codigo", this.Codigo));
+        toret.Add(new XElement("nombre", this.Nombre));
+        toret.Add(new XElement("unidades", this.Unidades));
 
-        var piezas = new XElement("piezas");
-        foreach (var proveedor in proveedores.Lista())
+        var proveedores = new XElement("proveedores-piezas");
+        foreach (var proveedor in _proveedoresPieza)
         {
-            piezas.Add(proveedor.ToXElement());
+            proveedores.Add(new XElement("proveedor",proveedor));
         }
-        toret.Add(piezas);
+        toret.Add(proveedores);
         
         return toret;
     }
 
     public Pieza(XElement xPieza)
     {
-        this.codigo = int.Parse(xPieza.Element("codigo").Value);
-        this.nombre = xPieza.Element("cif").Value;
-        this.unidades = int.Parse(xPieza.Element("unidades").Value);
-        foreach (XElement proveedor in xPieza.Elements("proveedor"))
-        {
-            proveedores.AddProveedor(new Proveedor(proveedor));
-        }
+        this.Codigo = xPieza.Element("codigo").Value;
+        this.Nombre = xPieza.Element("nombre").Value;
+        this.Unidades = Convert.ToInt32(xPieza.Element("unidades").Value);
+        
+        //List<string> proveedoresPiezas = new List<string>();
+        XElement xProveedorPieza = xPieza.Element("proveedores-piezas");
+        _proveedoresPieza = xProveedorPieza.Elements("proveedor").Select(x => x.Value).ToList();
+        //_proveedoresPieza = proveedoresPiezas;
+    }
+
+    public override string ToString()
+    {
+        return $"Pieza: {Nombre}, Codigo: {Codigo}";
     }
 }

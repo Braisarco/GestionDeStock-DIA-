@@ -8,40 +8,79 @@ namespace UI.core.gestionPiezas;
 
 public class Piezas
 {
-    private List<Pieza> piezas;
+    private List<Pieza> _listaPiezas;
     
     public Piezas()
     {
-        this.piezas = new List<Pieza>();
+        _listaPiezas = new List<Pieza>();
     }
     
-    public Piezas(List<Pieza> piezaArg)
+    public Piezas(List<Pieza> listaPiezas)
     {
-        this.piezas = piezaArg;
+        _listaPiezas = listaPiezas;
+    }
+
+    //GET
+    public Pieza Get(int pos)
+    {
+        if (pos >= 0 && pos < _listaPiezas.Count) {
+            return _listaPiezas[pos];    
+        }
+        return null;
     }
     
+    public Pieza Get(string codigo)
+    {
+        return _listaPiezas.Find(pieza => pieza.Codigo == codigo);
+    }
+    
+    //AÑADIR
+    public void AddPieza(Pieza pieza)
+    {
+        _listaPiezas.Add(pieza);
+    }
+    
+    //EDITAR
+    public void EditarPieza(int pos, Pieza pieza)
+    {
+        _listaPiezas[pos] = pieza;
+    }
+    
+    //ELIMINAR
+    public void EliminarPieza(Pieza pieza)
+    {
+        _listaPiezas.Remove(pieza);
+    }
+    
+    public void EliminarPieza(int pos)
+    {
+        _listaPiezas.RemoveAt(pos);
+    }
+
+    //LISTAR
     public List<Pieza> Lista()
     {
-        return piezas;
+        return new List<Pieza>(_listaPiezas);
     }
     
-
-    public void addPieza(Pieza p)
+    public List<Pieza> ProveedoresPieza(string cif)
     {
-        this.piezas.Add(p);
-    }
-
-    public void removePieza(Pieza p)
-    {
-        this.piezas.Remove(p);
+        return new List<Pieza>(_listaPiezas.Where(
+            pieza => pieza.TieneProveedor(cif)
+        ).ToList());
     }
     
+    //CONTAR
+    public int NumPiezas()
+    {
+        return _listaPiezas.Count;
+    }
     
     //-------XML-------
     public XElement toXML()
     {
         XElement root = new XElement("piezas");
-        foreach (var pieza in piezas)
+        foreach (var pieza in _listaPiezas)
         {
             root.Add(pieza.ToXElement());
         }
@@ -53,25 +92,13 @@ public class Piezas
         toXML().Save(filePath);
     }
     
-    public Piezas Recupera(string filePath)
+    public Piezas(XElement xPiezas)
     {
-
-        XElement root = XElement.Load(filePath);
-
-        Piezas toret = new Piezas();
-
-        foreach (XElement pieza in root.Elements("piezas"))
-        {
-            Pieza toAdd = new Pieza{
-                codigo = int.Parse(pieza.Element("codigo").Value),
-                nombre = pieza.Element("nombre").Value,
-                unidades = int.Parse(pieza.Element("unidadesDisponibles").Value),
-                proveedores = new Proveedores(pieza.Element("proveedores"))
-                
-            };
-            toret.addPieza(toAdd);
-        }
+        _listaPiezas = new List<Pieza>();
         
-        return toret;
+        foreach (var xPieza in xPiezas.Elements("pieza"))
+        {
+            _listaPiezas.Add(new Pieza(xPieza));
+        }
     }
 }

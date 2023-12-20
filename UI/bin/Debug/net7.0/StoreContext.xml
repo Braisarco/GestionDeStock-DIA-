@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Storage>
+  <pedidos />
+  <compras />
+  <clientes>
+    <cliente cif="0000000T">
+      <nombre>Alicia</nombre>
+      <direccion>Ourense ESEI</direccion>
+    </cliente>
+  </clientes>
+  <piezas>
+    <pieza>
+      <codigo>0001</codigo>
+      <nombre>Tornillo</nombre>
+      <unidades>90</unidades>
+      <proveedores-piezas />
+    </pieza>
+    <pieza>
+      <codigo>0002</codigo>
+      <nombre>Tuerca</nombre>
+      <unidades>60</unidades>
+      <proveedores-piezas />
+    </pieza>
+    <pieza>
+      <codigo>0003</codigo>
+      <nombre>Arandela</nombre>
+      <unidades>90</unidades>
+      <proveedores-piezas />
+    </pieza>
+    <pieza>
+      <codigo>0004</codigo>
+      <nombre>Para borrar</nombre>
+      <unidades>5</unidades>
+      <proveedores-piezas />
+    </pieza>
+  </piezas>
+  <proveedores>
+    <proveedor>
+      <cif>78810156N</cif>
+      <nombre>Brais</nombre>
+      <direccion_facturacion>Ourense ESEI</direccion_facturacion>
+      <piezas_provistas />
+    </proveedor>
+  </proveedores>
+</Storage>

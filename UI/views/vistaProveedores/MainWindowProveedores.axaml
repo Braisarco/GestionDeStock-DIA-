@@ -1,0 +1,150 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+        
+             Width="850" Height="700"
+             MinWidth="850" MinHeight="700"
+        
+             x:Class="UI.views.vistaProveedores.MainWindowProveedores">
+        <StackPanel>
+                <DockPanel HorizontalAlignment="Center"
+                           Height="30">
+                    
+                        <Button Name="VistaCalendario"
+                                Margin="10,0"
+                                Click="CambiarVistaCalendario">
+                                Calendario
+                        </Button>
+                    
+                        <Button Name="VistaProveedores"
+                                Margin="10,0"
+                                Click="CambiarVistaProveedores">
+                                Proveedores
+                        </Button>
+                    
+                        <Button Name="VistaClientes"
+                                Margin="10,0"
+                                Click="CambiarVistaClientes">
+                                Clientes
+                        </Button>
+                    
+                        <Button Name="VistaPedidos"
+                                Margin="10,0"
+                                Click="CambiarVistaPedidos">
+                                Pedidos
+                        </Button>
+                        
+                        <Button Name="VistaComprarStock"
+                                Margin="10,0"
+                                Click="CambiarVistaComprarStock">
+                                Comprar
+                        </Button>
+                    
+                        <Button Name="VistaStock"
+                                Margin="10,0"
+                                Click="CambiarVistaStock">
+                                Stock
+                        </Button>
+                    
+                </DockPanel>
+        
+        
+                <DockPanel VerticalAlignment="Top" Margin="25">
+                        
+                        <!-- Barra de búsqueda -->
+                        <DockPanel Dock="Top" Margin="15">
+                                <TextBox></TextBox> 
+                        </DockPanel>
+                
+                        <!-- Un proveedor concreto -->
+                        <DockPanel DockPanel.Dock="Right" MinWidth="500">
+                                
+                                <StackPanel DockPanel.Dock="Top">
+                                        <!-- Botones editar/eliminar proveedor actual -->                        
+                                        <DockPanel Dock="Top" HorizontalAlignment="Left" Margin="15" >
+                                                <Button Name="BtModoEditarProveedor" Content="Editar" Margin="10,0"></Button>
+                                                <Button Name="BtEliminarProveedor" Content="Eliminar"></Button>
+                                        </DockPanel>
+                                
+                                        <!-- Campos proveedor-->
+                                        <DockPanel Name="DockCIF" Margin="5">
+                                                <Label Content="CIF" VerticalAlignment="Center"></Label>
+                                                <TextBox Name="TbCIF" TextAlignment="Right" IsReadOnly="True"></TextBox>
+                                        </DockPanel>
+                                                
+                                        <DockPanel Name="DockNombre" Margin="5">
+                                                <Label Content="Nombre" VerticalAlignment="Center"></Label>
+                                                <TextBox Name="TbNombre" TextAlignment="Right" IsReadOnly="True"></TextBox>
+                                        </DockPanel>
+                                        
+                                        <DockPanel Name="DockDireccionFacturacion" Margin="5">
+                                                <Label Content="Direccion de Facturacion" VerticalAlignment="Center"></Label>
+                                                <TextBox Name="TbDireccionFacturacion" TextAlignment="Right" IsReadOnly="True"></TextBox>
+                                        </DockPanel>
+                                                
+                                        <!-- Botones añadir y editar -->
+                                        <DockPanel Name="PanelCambiarCampos" IsVisible="False">
+                                                <Button Name="BtAddProveedor" Content="Añadir proveedor" IsVisible="False"></Button>
+                                                <Button Name="BtEditarProveedor" Content="Editar proveedor" IsVisible="False"></Button>
+                                        </DockPanel>
+                                        
+                                </StackPanel>
+                                                
+                                <!-- Piezas -->
+                                <DockPanel Dock="Bottom" Name="PanelPiezas">
+                                        
+                                        <!-- Piezas provistas -->
+                                        <DockPanel Dock="Left" MinWidth="250">
+                                                
+                                                <!-- Eliminar seleccionada -->
+                                                <DockPanel Dock="Bottom" Margin="5">
+                                                        <Button DockPanel.Dock="Right" Name="BtEliminarPieza" Content="Eliminar pieza seleccionada" ></Button>
+                                                </DockPanel>
+                                                
+                                                <!-- Listado -->
+                                                <DockPanel Dock="Top" Name="DockPiezasProvistas" Margin="5,15,5,5" >
+                                                        <Label DockPanel.Dock="Top" Name="LbNumPiezasProvistas" Content="Piezas Provistas: 0"></Label>
+                                                        <ListBox DockPanel.Dock="Bottom" Name="LbPiezasProvistas"></ListBox>
+                                                </DockPanel>
+
+                                        </DockPanel>
+                                        
+                                        <!-- Piezas NO provistas -->
+                                        <DockPanel Dock="Right">
+                                                
+                                                <!-- Añadir pieza sleccionada -->
+                                                <DockPanel Dock="Bottom" Margin="5">
+                                                        <Button DockPanel.Dock="Right" Name="BtAddPieza" Content="Añadir pieza seleccionada" ></Button>
+                                                </DockPanel>
+                                                
+                                                <!-- Listado -->
+                                                <DockPanel Dock="Top" Name="DockPiezasNoProvistas" Margin="5,15,5,5" >
+                                                        <Label DockPanel.Dock="Top" Name="LbNumPiezasNoProvsitas" Content="Piezas No Provistas: 0"></Label>
+                                                        <ListBox DockPanel.Dock="Bottom" Name="LbPiezasNoProvistas" ScrollViewer.VerticalScrollBarVisibility="Visible" ></ListBox>
+                                                </DockPanel>
+                                                
+                                        </DockPanel>
+
+                                </DockPanel>
+                                
+                        </DockPanel>
+                        
+                        <!-- Todos los proveedores -->
+                        <DockPanel DockPanel.Dock="Left" HorizontalAlignment="Stretch">
+                                
+                                <!-- Num proveedores / Añadir-->
+                                <DockPanel Dock="Top" Margin="15">
+                                        <Label DockPanel.Dock="Left" Name="LbNumProveedores" VerticalAlignment="Center" Content="Número de proveedores: 0"></Label>
+                                        <Button DockPanel.Dock="Right" Margin="10,0" Name="BtModoAddProveedor" Content="Añadir"></Button>
+                                </DockPanel>
+                                
+                                <!-- Lista de proveedores -->
+                                <ListBox DockPanel.Dock="Bottom" Margin="15,0" VerticalAlignment="Top" Name="LbListProveedores"></ListBox>
+                        </DockPanel>
+                        
+                </DockPanel>
+        
+        </StackPanel>
+</UserControl>

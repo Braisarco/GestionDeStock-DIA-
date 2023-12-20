@@ -65,12 +65,12 @@ public class Buscador
         return toret;
     }
     
-    public List<Pieza> buscarPiezaCodigo(int codigo)
+    public List<Pieza> buscarPiezaCodigo(string codigo)
     {
         List<Pieza> toret = new List<Pieza>();
         foreach (Pieza pieza in piezas.Lista())
         {
-            if (pieza.codigo == codigo)
+            if (pieza.Codigo.Equals(codigo))
             {
                 toret.Add(pieza);
             }
@@ -85,7 +85,7 @@ public class Buscador
         List<Pieza> toret = new List<Pieza>();
         foreach (Pieza pieza in piezas.Lista())
         {
-            if (pieza.nombre.StartsWith(nombre))
+            if (pieza.Nombre.StartsWith(nombre))
             {
                 toret.Add(pieza);
             }

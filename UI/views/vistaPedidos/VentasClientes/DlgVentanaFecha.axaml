@@ -1,0 +1,13 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="UI.views.vistaPedidos.VentasClientes.DlgVentanaFecha"
+        Title="DlgVentanaFecha">
+        <StackPanel Margin="10">
+                <TextBlock Text="Fecha de Entrega:" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center"/>
+                <TextBlock Name="FechaTextBlock" VerticalAlignment="Center" HorizontalAlignment="Center" TextAlignment="Center"/>
+                <Button Content="Aceptar" HorizontalAlignment="Center" Name="BtnAceptar"/>
+        </StackPanel>
+</Window>

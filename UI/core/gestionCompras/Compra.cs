@@ -27,7 +27,7 @@ public class Compra
         piezas = new Piezas();
         foreach (XElement pieza in xCompra.Elements("piezas"))
         {
-            piezas.addPieza(new Pieza(pieza));
+            piezas.AddPieza(new Pieza(pieza));
         }
     }
 

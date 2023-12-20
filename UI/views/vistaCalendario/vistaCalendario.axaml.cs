@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection.PortableExecutable;
 using System.Text;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using UI.core;
 using UI.core.gestionPedidos;
 
@@ -11,10 +12,12 @@ namespace UI.views.vistaCalendario;
 
 public partial class vistaCalendario : UserControl
 {
+    private MainWindow parentWindow;
     private Storage _storage;
-    public vistaCalendario(Storage storageInstance)
+    public vistaCalendario(MainWindow windowParent)
     {
-        _storage = storageInstance;
+        parentWindow = windowParent;
+        _storage = windowParent._storage;
         
         InitializeComponent();
         
@@ -38,5 +41,32 @@ public partial class vistaCalendario : UserControl
             string contenido = contenidoDia.ToString();
             eventos.Text = contenido;
         };
+    }
+    //***** HEADER USAGE *****
+
+    private void CambiarVistaCalendario(object? sender, RoutedEventArgs routedEventArgs)
+    {
+        parentWindow.CambiarVistaCalendario(sender, routedEventArgs);
+    }
+    
+    private void CambiarVistaProveedores(object? sender, RoutedEventArgs routedEventArgs)
+    {
+        parentWindow.CambiarVistaProveedores(sender, routedEventArgs);
+    }
+    private void CambiarVistaPedidos(object? sender, RoutedEventArgs routedEventArgs)
+    {
+        parentWindow.CambiarVistaPedidos(sender, routedEventArgs);
+    }
+    private void CambiarVistaStock(object? sender, RoutedEventArgs routedEventArgs)
+    {
+        parentWindow.CambiarVistaStock(sender, routedEventArgs);
+    }
+    private void CambiarVistaClientes(object? sender, RoutedEventArgs routedEventArgs)
+    {
+        parentWindow.CambiarVistaClientes(sender, routedEventArgs);
+    }
+    public void CambiarVistaComprarStock(object? sender, RoutedEventArgs routedEventArgs)
+    {
+        parentWindow.CambiarVistaComprarStock(sender,routedEventArgs);
     }
 }

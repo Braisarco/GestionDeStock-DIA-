@@ -55,6 +55,11 @@ namespace UI.core.gestionClientes;
             }
             this.listaClientes.Remove(clienteEliminar);
         }
+
+        public int Count()
+        {
+            return this.listaClientes.Count;
+        }
         
         public IEnumerable<Cliente> ListaClientes
         {

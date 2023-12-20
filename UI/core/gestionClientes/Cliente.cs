@@ -11,14 +11,14 @@ namespace UI.core.gestionClientes;
         private string cif;
         private string nombre;
         private string direccionFacturacion;
-        private List<int> codigoPiezasCompradas;
+        private List<string> codigoPiezasCompradas;
 
         public Cliente(){ }
         public Cliente(string cif, string nombre)
         {
             this.cif = cif;
             this.nombre = nombre;
-            codigoPiezasCompradas = new List<int>();
+            codigoPiezasCompradas = new List<string>();
         }
 
         public Cliente(string cif, string nombre, string direccion, IEnumerable<Pieza> piezas)
@@ -26,19 +26,22 @@ namespace UI.core.gestionClientes;
             this.cif = cif;
             this.nombre = nombre;
             this.direccionFacturacion = direccion;
-            this.codigoPiezasCompradas = new List<int>();
+            this.codigoPiezasCompradas = new List<string>();
             foreach (Pieza p in piezas)
             {
-                this.codigoPiezasCompradas.Add(p.codigo);
+                this.codigoPiezasCompradas.Add(p.Codigo);
             }
         }
         
-        public Cliente(string cif, string nombre, string direccion, List<int> piezas)
+        public Cliente(string cif, string nombre, string direccion, Piezas piezas)
         {
             this.cif = cif;
             this.nombre = nombre;
             this.direccionFacturacion = direccion;
-            this.codigoPiezasCompradas = piezas;
+            foreach (Pieza pieza in piezas.Lista())
+            {
+                this.codigoPiezasCompradas.Add(pieza.Codigo);
+            }
         }
         
         public Cliente(string cif, string nombre, string direccion)
@@ -46,7 +49,7 @@ namespace UI.core.gestionClientes;
             this.cif = cif;
             this.nombre = nombre;
             this.direccionFacturacion = direccion;
-            this.codigoPiezasCompradas = new List<int>();
+            this.codigoPiezasCompradas = new List<string>();
         }
 
         public XElement toXML()
@@ -56,7 +59,7 @@ namespace UI.core.gestionClientes;
                 new XElement("direccion", this.direccionFacturacion));
             XAttribute codigo = new XAttribute("cif", this.cif);
             root.Add(codigo);
-            foreach (int valor in CodigoPiezasVendidas)
+            foreach (string valor in CodigoPiezasVendidas)
             {
                 root.Add(new XElement("codigo", valor));
             }
@@ -67,12 +70,12 @@ namespace UI.core.gestionClientes;
         public Cliente(XElement xCliente)
         {
             this.nombre = xCliente.Element("nombre").Value;
-            this.cif = xCliente.Element("cif").Value;
+            this.cif = xCliente.Attribute("cif").Value;
             this.direccionFacturacion = xCliente.Element("direccion").Value;
-            List<int> codigos = new List<int>();
+            List<string> codigos = new List<string>();
             foreach (XElement codigo in xCliente.Elements("codigo"))
             {
-                codigos.Add(int.Parse(codigo.Value));
+                codigos.Add(codigo.Value);
             }
 
             this.codigoPiezasCompradas = codigos;
@@ -94,7 +97,7 @@ namespace UI.core.gestionClientes;
             set => this.direccionFacturacion = value;
         }
 
-        public List<int> CodigoPiezasVendidas
+        public List<string> CodigoPiezasVendidas
         {
             get => this.codigoPiezasCompradas;
         }
@@ -109,7 +112,7 @@ namespace UI.core.gestionClientes;
                 else
                 {
                     StringBuilder toret = new StringBuilder();
-                    foreach (int codigo in this.codigoPiezasCompradas)
+                    foreach (string codigo in this.codigoPiezasCompradas)
                     {
                         toret.Append($" |{codigo}| ");
                     }

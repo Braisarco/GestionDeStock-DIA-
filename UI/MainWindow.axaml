@@ -2,7 +2,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" 
+        Width="850" Height="700"
+        MinWidth="850" MinHeight="700"
         x:Class="UI.MainWindow"
         Title="Calendario">
     
@@ -19,28 +21,39 @@
                     
                                 <Button Name="VistaProveedores"
                                         Margin="10,0"
-                                >
+                                        Click="CambiarVistaProveedores">
                                         Proveedores
                                 </Button>
                     
                                 <Button Name="VistaClientes"
                                         Margin="10,0"
-                                >
+                                        Click="CambiarVistaClientes">
                                         Clientes
                                 </Button>
                     
                                 <Button Name="VistaPedidos"
                                         Margin="10,0"
-                                >
+                                        Click="CambiarVistaPedidos">
                                         Pedidos
+                                </Button>
+                                
+                                <Button Name="VistaComprarStock"
+                                        Margin="10,0"
+                                        Click="CambiarVistaComprarStock">
+                                        Comprar
                                 </Button>
                     
                                 <Button Name="VistaStock"
                                         Margin="10,0"
-                                >
+                                        Click="CambiarVistaStock">
                                         Stock
                                 </Button>
                     
+                        </DockPanel>
+                        <DockPanel HorizontalAlignment="Center"
+                                   VerticalAlignment="Center"
+                                   Margin="0,90">
+                                <Label>Aplicacion de gestion de Stock</Label>
                         </DockPanel>
                 </StackPanel>
         </ContentControl>

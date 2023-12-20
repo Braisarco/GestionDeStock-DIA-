@@ -24,8 +24,26 @@ build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 [D:/riderGestionStock/UI/views/vistaCalendario/vistaCalendario.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[D:/riderGestionStock/UI/views/vistaProveedores/MainWindow.axaml]
+[D:/riderGestionStock/UI/views/vistaClientes/MainWindowClientes.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
 
-[D:/riderGestionStock/UI/views/vistaProveedores/ProveedorWindow.axaml]
+[D:/riderGestionStock/UI/views/vistaPedidos/ComprasProveedores/DlgVentanaFecha.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[D:/riderGestionStock/UI/views/vistaPedidos/ComprasProveedores/MainWindowComprarStock.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[D:/riderGestionStock/UI/views/vistaPedidos/VentasClientes/DlgVentanaFecha.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[D:/riderGestionStock/UI/views/vistaPedidos/VentasClientes/MainWindowPedidos.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[D:/riderGestionStock/UI/views/vistaProveedores/MainWindowProveedores.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[D:/riderGestionStock/UI/views/vistaStock/MainWindowStock.axaml]
+build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml
+
+[D:/riderGestionStock/UI/views/vistaStock/PiezaWindow.axaml]
 build_metadata.AdditionalFiles.SourceItemGroup = AvaloniaXaml

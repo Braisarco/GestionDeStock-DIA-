@@ -24,7 +24,7 @@ public class Storage
 
     private Proveedores _proveedores;
 
-    public GestionCompra Compra
+    public GestionCompra Compras
     {
         get => _compras;
     }
@@ -57,8 +57,16 @@ public class Storage
 
         if (File.Exists(fileName))
         {
+            _piezas = new Piezas();
+            _compras = new GestionCompra();
+            _pedidos = new Pedidos();
+            _proveedores = new Proveedores();
+            _clientes = new Clientes();
+            
             Console.WriteLine("Cargando datos...");
             loadStorage(fileName);
+            Console.WriteLine("Los datos se han recuperado exitosamente!!");
+            
         }else
         {
             Console.WriteLine("Datos no encontrados, creando aplicacion...");
@@ -87,10 +95,31 @@ public class Storage
 
     private void loadStorage(string file)
     {
-        
+        XElement root = XElement.Load(file);
+
+        foreach (XElement cliente in root.Element("clientes").Elements("cliente"))
+        {
+            Clientes.AñadirCliente(new Cliente(cliente));
+        }
+        foreach (XElement pedido in root.Element("pedidos").Elements("pedido"))
+        {
+            Pedidos.Lista().Add(new Pedido(pedido));
+        }
+        foreach (XElement proveedor in root.Element("proveedores").Elements("proveedor"))
+        {
+            Proveedores.AddProveedor(new Proveedor(proveedor));
+        }
+        foreach (XElement pieza in root.Element("piezas").Elements("pieza"))
+        {
+            Piezas.AddPieza(new Pieza(pieza));
+        }
+        foreach (XElement compra in root.Element("compras").Elements("compra"))
+        {
+            Compras.Add(new Compra(compra));
+        }
     }
 
-    private void saveStoreContext()
+    public void saveStoreContext()
     {
         XElement root = new XElement("Storage");
         

@@ -1,0 +1,68 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" 
+        Width="850" Height="700"
+        MinWidth="850" MinHeight="700"
+        x:Class="UI.views.vistaPedidos.VentasClientes.MainWindowPedidos">
+    
+    <StackPanel Margin="15">
+        <DockPanel HorizontalAlignment="Center"
+                   Height="30">
+                    
+            <Button Name="VistaCalendario"
+                    Margin="10,0"
+                    Click="CambiarVistaCalendario">
+                Calendario
+            </Button>
+                    
+            <Button Name="VistaProveedores"
+                    Margin="10,0"
+                    Click="CambiarVistaProveedores">
+                Proveedores
+            </Button>
+                    
+            <Button Name="VistaClientes"
+                    Margin="10,0"
+                    Click="CambiarVistaClientes">
+                Clientes
+            </Button>
+                    
+            <Button Name="VistaPedidos"
+                    Margin="10,0"
+                    Click="CambiarVistaPedidos">
+                Pedidos
+            </Button>
+            
+            <Button Name="VistaComprarStock"
+                    Margin="10,0"
+                    Click="CambiarVistaComprarStock">
+                Comprar
+            </Button>
+                    
+            <Button Name="VistaStock"
+                    Margin="10,0"
+                    Click="CambiarVistaStock">
+                Stock
+            </Button>
+            </DockPanel>
+        <StackPanel Name="DockClientes" Margin="5,15,5,5" >
+            <Label Name="LbClientes" Content="Lista de clientes"></Label>
+            <ListBox Name="LbClientesDisponibles" SelectionChanged="LbClientesDisponibles_SelectionChanged" MaxHeight="200"/>
+        </StackPanel>
+        <StackPanel Name="DockPiezasDisponibles" Margin="5,15,5,5" >
+            <Label Name="LbPieza" Content="Piezas Disponibles"></Label>
+            <ListBox Name="LbPiezasDisponibles" SelectionChanged="LbPiezasDisponibles_SelectionChanged"  MaxHeight="200"></ListBox>
+        </StackPanel>
+        <StackPanel Name="DockNumeroPiezas" Margin="5">
+            <Label Content="Número de Piezas" VerticalAlignment="Center"></Label>
+            <TextBox Name="TbNumeroPiezas" TextAlignment="Right" IsReadOnly="True"></TextBox>
+        </StackPanel>
+        <StackPanel Name="StackPanelContenedor" Margin="5">
+            <Label Content="Cantidad a Pedir" VerticalAlignment="Center"></Label>
+            <TextBox Name="TbCantidadPedido" TextAlignment="Right" Watermark="Introduce la cantidad a pedir"></TextBox>
+            <Button Content="Hacer Pedido" Name="BtnHacerPedido" Margin="0,5,0,0"/>
+        </StackPanel>
+    </StackPanel>
+</UserControl>

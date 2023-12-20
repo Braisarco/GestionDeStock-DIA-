@@ -2,17 +2,21 @@ using System;
 using System.IO;
 using System.Xml.Linq;
 using Avalonia.Controls;
+using Avalonia.Interactivity;
 using UI.core.gestionProveedores;
 
 namespace UI.views.vistaProveedores;
 
-public partial class MainWindow : Window
+public partial class MainWindowProveedores : UserControl
 {
     private const string Filename = "proveedores.xml";
-    public Proveedores _proveedores = new Proveedores();
+    public Proveedores _proveedores;
+    private MainWindow parentWindow;
         
-    public MainWindow()
+    public MainWindowProveedores(MainWindow windowParent)
     {
+        _proveedores = windowParent._storage.Proveedores;
+        parentWindow = windowParent;
         InitializeComponent();
 
         //CargarDatosEjemplo(12, 3);
@@ -28,7 +32,6 @@ public partial class MainWindow : Window
         BtAddPieza.Click += (_, _) => AddPieza();
         BtEliminarPieza.Click += (_, _) => EliminarPieza();
         
-        CargarXML();
         PrintListProveedores();
         //PrintProveedor();
         LbListProveedores.SelectedIndex = 0;
@@ -91,6 +94,7 @@ public partial class MainWindow : Window
             LbListProveedores.SelectedIndex = _proveedores.NumProveedores() - 1;
             PrintProveedor();
             PrintListProveedores();
+            parentWindow._storage.saveStoreContext();
         }
         catch (Exception) {}
     }
@@ -110,6 +114,7 @@ public partial class MainWindow : Window
             PrintListProveedores();
             LbListProveedores.SelectedIndex = index;
         }
+        PrintListProveedores();
     }
     
     private void EliminarProveedor()
@@ -121,7 +126,7 @@ public partial class MainWindow : Window
         
         PrintListProveedores();
         PrintProveedor();
-        GuardarXML();
+        parentWindow._storage.saveStoreContext();
     }
     
     
@@ -187,7 +192,7 @@ public partial class MainWindow : Window
         if (index >= 0 && index < LbPiezasNoProvistas.ItemCount)
         {
             proveedor.AddPieza(Convert.ToInt32(LbPiezasNoProvistas.SelectedItem));
-            GuardarXML();
+            parentWindow._storage.saveStoreContext();
             PrintProveedor();    
         }
     }
@@ -201,7 +206,7 @@ public partial class MainWindow : Window
         if (index >= 0 && index < LbPiezasProvistas.ItemCount)
         {
             proveedor.EliminarPieza(index);
-            GuardarXML();
+            parentWindow._storage.saveStoreContext();
             PrintProveedor();    
         }
     }
@@ -243,6 +248,35 @@ public partial class MainWindow : Window
             }
             _proveedores.AddProveedor(proveedor);
         }
-        GuardarXML();
+        parentWindow._storage.saveStoreContext();
     }
+    
+    //***** HEADER USAGE *****
+
+    private void CambiarVistaCalendario(object? sender, RoutedEventArgs routedEventArgs)
+    {
+        parentWindow.CambiarVistaCalendario(sender, routedEventArgs);
+    }
+    
+    private void CambiarVistaProveedores(object? sender, RoutedEventArgs routedEventArgs)
+    {
+        parentWindow.CambiarVistaProveedores(sender, routedEventArgs);
+    }
+    private void CambiarVistaPedidos(object? sender, RoutedEventArgs routedEventArgs)
+    {
+        parentWindow.CambiarVistaPedidos(sender, routedEventArgs);
+    }
+    private void CambiarVistaStock(object? sender, RoutedEventArgs routedEventArgs)
+    {
+        parentWindow.CambiarVistaStock(sender, routedEventArgs);
+    }
+    private void CambiarVistaClientes(object? sender, RoutedEventArgs routedEventArgs)
+    {
+        parentWindow.CambiarVistaClientes(sender, routedEventArgs);
+    }
+    public void CambiarVistaComprarStock(object? sender, RoutedEventArgs routedEventArgs)
+    {
+        parentWindow.CambiarVistaComprarStock(sender,routedEventArgs);
+    }
+    
 }

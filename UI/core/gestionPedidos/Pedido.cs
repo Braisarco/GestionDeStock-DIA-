@@ -42,7 +42,7 @@ public class Pedido
         Cliente = new Cliente(xPedido.Element("cliente"));
         foreach (XElement pieza in xPedido.Elements("pieza"))
         {
-            Piezas.addPieza(new Pieza(pieza));
+            Piezas.AddPieza(new Pieza(pieza));
         }
     }
 
