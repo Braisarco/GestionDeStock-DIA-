@@ -1,9 +1,13 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Xml.Linq;
 using Avalonia.Controls;
 using Avalonia.Interactivity;
+using UI.core;
+using UI.core.gestionPiezas;
 using UI.core.gestionProveedores;
+using UI.views.vistaStock;
 
 namespace UI.views.vistaProveedores;
 
@@ -11,11 +15,15 @@ public partial class MainWindowProveedores : UserControl
 {
     private const string Filename = "proveedores.xml";
     public Proveedores _proveedores;
+    private List<Pieza> _piezasProvistas;
+    private List<Pieza> _piezasNoProvistas;
     private MainWindow parentWindow;
         
     public MainWindowProveedores(MainWindow windowParent)
     {
         _proveedores = windowParent._storage.Proveedores;
+        _piezasProvistas = new List<Pieza>();
+        _piezasNoProvistas = new List<Pieza>();
         parentWindow = windowParent;
         InitializeComponent();
 
@@ -145,22 +153,39 @@ public partial class MainWindowProveedores : UserControl
             TbNombre.Text = proveedor.Nombre;
             TbDireccionFacturacion.Text = proveedor.DireccionFacturacion;
             
-            LbPiezasProvistas.Items.Clear();
+            /*LbPiezasProvistas.Items.Clear();
             foreach (var pieza in proveedor.PiezasProvistas())
             {
                 LbPiezasProvistas.Items.Add(pieza) ;
             }
-            LbNumPiezasProvistas.Content = "Piezas Provistas: " + proveedor.NumPiezas();
+            LbNumPiezasProvistas.Content = "Piezas Provistas: " + proveedor.NumPiezas();*/
             
+            LbPiezasProvistas.Items.Clear();
             LbPiezasNoProvistas.Items.Clear();
 
-            for (int i = 0; i < _proveedores.NumProveedores(); i++) {
+            _piezasProvistas = new List<Pieza>();
+            _piezasNoProvistas = new List<Pieza>();
+            
+            foreach (var pieza in parentWindow._storage.Piezas.Lista())
+            {
+                if (!proveedor.TienePieza(Convert.ToInt32(pieza.Codigo))) {
+                    _piezasNoProvistas.Add(pieza);
+                    LbPiezasNoProvistas.Items.Add(pieza.Nombre);
+                }
+                else
+                {
+                    _piezasProvistas.Add(pieza);
+                    LbPiezasProvistas.Items.Add(pieza.Nombre);
+                }
+            }
+            /*for (int i = 0; i < _proveedores.NumProveedores(); i++) {
                 foreach (var pieza in _proveedores.Get(i).PiezasProvistas())  {
                     if (!proveedor.TienePieza(pieza)) {
                         LbPiezasNoProvistas.Items.Add(pieza);
                     }
                 }
-            }
+            }*/
+            LbNumPiezasProvistas.Content = "Piezas Provistas: " + proveedor.NumPiezas();
             LbNumPiezasNoProvsitas.Content = "Piezas No Provistas: " + LbPiezasNoProvistas.ItemCount;
 
         }
@@ -187,11 +212,11 @@ public partial class MainWindowProveedores : UserControl
     private void AddPieza()
     {
         var proveedor = _proveedores.Get(LbListProveedores.SelectedIndex);
-        int index = Convert.ToInt32(LbPiezasNoProvistas.SelectedIndex);
+        int index = LbPiezasNoProvistas.SelectedIndex;
 
-        if (index >= 0 && index < LbPiezasNoProvistas.ItemCount)
+        if (index >= 0 && index < _piezasNoProvistas.Count)
         {
-            proveedor.AddPieza(Convert.ToInt32(LbPiezasNoProvistas.SelectedItem));
+            proveedor.AddPieza(Convert.ToInt32(_piezasNoProvistas[index].Codigo)); 
             parentWindow._storage.saveStoreContext();
             PrintProveedor();    
         }
@@ -203,7 +228,7 @@ public partial class MainWindowProveedores : UserControl
         var proveedor = _proveedores.Get(LbListProveedores.SelectedIndex);
         int index = Convert.ToInt32(LbPiezasProvistas.SelectedIndex);
         
-        if (index >= 0 && index < LbPiezasProvistas.ItemCount)
+        if (index >= 0 && index < _piezasProvistas.Count)
         {
             proveedor.EliminarPieza(index);
             parentWindow._storage.saveStoreContext();
@@ -218,7 +243,7 @@ public partial class MainWindowProveedores : UserControl
     private void GuardarXML()
     {
         XElement xProveedores = _proveedores.ToXElement();
-        //xProveedores.Save(Filename);
+        xProveedores.Save(Filename);
     }
     
     private void CargarXML()
